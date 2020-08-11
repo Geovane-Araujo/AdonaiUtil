@@ -44,17 +44,25 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 {
                     tipoatributo = "double";
                 }
-                else if (tipo[i].Equals("bytea"))
+                else if (tipo[i].Equals("byte"))
                 {
-                    tipoatributo = "byte[]";
+                    tipoatributo = "byte";
                 }
                 else if (tipo[i].Equals("bytea"))
                 {
-                    tipoatributo = "byte[]";
+                    tipoatributo = "bytes";
                 }
                 else if (tipo[i].Equals("bigint"))
                 {
                     tipoatributo = "long";
+                }
+                else if (tipo[i].Equals("timestamp without time zone"))
+                {
+                    tipoatributo = "Timestamp";
+                }
+                else if (tipo[i].Equals("date"))
+                {
+                    tipoatributo = "Date";
                 }
 
                 aux = coluna[i];
@@ -84,17 +92,25 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 {
                     tipoatributo = "double";
                 }
-                else if (tipo[i].Equals("bytea"))
+                else if (tipo[i].Equals("byte"))
                 {
-                    tipoatributo = "byte[]";
+                    tipoatributo = "byte";
                 }
                 else if (tipo[i].Equals("bytea"))
                 {
-                    tipoatributo = "byte[]";
+                    tipoatributo = "bytes";
                 }
                 else if (tipo[i].Equals("bigint"))
                 {
                     tipoatributo = "long";
+                }
+                else if (tipo[i].Equals("timestamp without time zone"))
+                {
+                    tipoatributo = "Timestamp";
+                }
+                else if (tipo[i].Equals("date"))
+                {
+                    tipoatributo = "Date";
                 }
 
                 aux = coluna[i];
@@ -182,9 +198,11 @@ namespace AdonaiSoft_Utilitario.Utilitario
         {
 
             String atributo = "";
+            String tipoatributo = "";
             var aux = "";
             String sql = "";
             char aspas = (char)34;
+            String column = "";
 
             String codigo = "package " + package + ".controller;\n\n";
 
@@ -215,14 +233,159 @@ namespace AdonaiSoft_Utilitario.Utilitario
 
             codigo = codigo + "        con.setAutoCommit(false);\n\n";
 
+            // add
             codigo = codigo + "            if("+classe+"Model.isAdd()){\n\n";
 
-            for(int i = 0;i < coluna.Length; i++)
+            String values = "?";
+            for(int i = 1;i < coluna.Length; i++)
             {
                 sql = sql + ", " +coluna[i];
+                values = values + ", ?";
             }
 
-            codigo = codigo + "                "+aspas+"INSERT INTO"+tabela+"("+ sql + aspas+"\n\n";
+            codigo = codigo + "                "+aspas+"INSERT INTO "+tabela+"("+ sql+") VALUES("+ values+");" + aspas+"\n\n\n";
+            codigo = codigo + "                stmt = con.prepareStatement(sql);\n\n\n\n";
+            int a = 1;
+            for (int i = 1; i < coluna.Length; i++)
+            {
+                if (tipo[i].Equals("integer"))
+                {
+                    tipoatributo = "stmt.setInt(";
+                }
+                else if (tipo[i].Equals("character varying"))
+                {
+                    tipoatributo = "stmt.setString(";
+                }
+                else if (tipo[i].Equals("real"))
+                {
+                    tipoatributo = "stmt.setDouble(";
+                }
+                else if (tipo[i].Equals("text"))
+                {
+                    tipoatributo = "stmt.setString(";
+                }
+                else if (tipo[i].Equals("double precision"))
+                {
+                    tipoatributo = "stmt.setDouble(";
+                }
+                else if (tipo[i].Equals("byte"))
+                {
+                    tipoatributo = "stmt.setByte(";
+                }
+                else if (tipo[i].Equals("bytea"))
+                {
+                    tipoatributo = "stmt.setBytea(";
+                }
+                else if (tipo[i].Equals("bigint"))
+                {
+                    tipoatributo = "stmt.setLong(";
+                }
+                else if (tipo[i].Equals("timestamp without time zone"))
+                {
+                    tipoatributo = "stmt.setTimestamp(";
+                }
+                else if (tipo[i].Equals("date"))
+                {
+                    tipoatributo = "stmt.setDate(";
+                }
+
+                aux = coluna[i];
+                column = char.ToUpper(aux[0]) + aux.Substring(1);
+               
+                
+                codigo = codigo + "                "+a+", "+tipoatributo + atributo+".get"+ column + "());\n";
+                a = a + 1;
+            }
+            codigo = codigo + "                stmt.execute();\n\n\n\n";
+            codigo = codigo + "                log = "+aspas+"Adicionaou"+aspas+";\n\n\n\n";
+            codigo = codigo + "            }\n\n\n\n";
+
+
+            // edit
+            codigo = codigo + "            if(" + classe + "Model.isEdit()){\n\n";
+
+            
+            for (int i = 1; i < coluna.Length; i++)
+            {
+                sql = sql + coluna[i]+ "=?, ";
+            }
+
+            
+
+            codigo = codigo + "                " + aspas + "UPDATE " + tabela + " SET " + sql + " WHERE id = ? ;" + aspas + "\n\n\n";
+            codigo = codigo + "                stmt = con.prepareStatement(sql);\n\n\n\n";
+
+            for (int i = 1; i < coluna.Length; i++)
+            {
+                if (tipo[i].Equals("integer"))
+                {
+                    tipoatributo = "stmt.setInt(";
+                }
+                else if (tipo[i].Equals("character varying"))
+                {
+                    tipoatributo = "stmt.setString(";
+                }
+                else if (tipo[i].Equals("real"))
+                {
+                    tipoatributo = "stmt.setDouble(";
+                }
+                else if (tipo[i].Equals("text"))
+                {
+                    tipoatributo = "stmt.setString(";
+                }
+                else if (tipo[i].Equals("double precision"))
+                {
+                    tipoatributo = "stmt.setDouble(";
+                }
+                else if (tipo[i].Equals("byte"))
+                {
+                    tipoatributo = "stmt.setByte(";
+                }
+                else if (tipo[i].Equals("bytea"))
+                {
+                    tipoatributo = "stmt.setBytea(";
+                }
+                else if (tipo[i].Equals("bigint"))
+                {
+                    tipoatributo = "stmt.setLong(";
+                }
+                else if (tipo[i].Equals("timestamp without time zone"))
+                {
+                    tipoatributo = "stmt.setTimestamp(";
+                }
+                else if (tipo[i].Equals("date"))
+                {
+                    tipoatributo = "stmt.setDate(";
+                }
+
+                aux = coluna[i];
+                column = char.ToUpper(aux[0]) + aux.Substring(1);
+
+
+                codigo = codigo + "                " + tipoatributo + atributo + ".get" + column + "());\n";
+            }
+            codigo = codigo + "                " + tipoatributo + atributo + ".getId());\n";
+
+            codigo = codigo + "                stmt.execute();\n\n\n\n";
+            codigo = codigo + "                log = " + aspas + "Editou" + aspas + ";\n\n\n\n";
+            codigo = codigo + "            }\n\n\n\n";
+
+
+            // del
+            codigo = codigo + "            if(" + classe + "Model.isDel()){\n\n";
+
+            aux = coluna[0];
+            column = char.ToLower(aux[0]) + aux.Substring(1);
+
+            codigo = codigo + "                " + aspas + "DELETE FROM " + tabela + " WHERE id ="+ column + ".getId();" + aspas + "\n\n\n";
+            codigo = codigo + "                stmt = con.prepareStatement(sql);\n\n\n\n";
+            codigo = codigo + "                stmt.execute();\n\n\n\n";
+
+           
+            codigo = codigo + "                log = " + aspas + "Apagou" + aspas + ";\n\n\n\n";
+            codigo = codigo + "            }\n\n\n\n";
+
+
 
             codigo = codigo + "    }\n";
 

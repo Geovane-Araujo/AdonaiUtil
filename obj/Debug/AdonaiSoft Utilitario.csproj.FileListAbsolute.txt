@@ -43,3 +43,4 @@ E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.exe
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.pdb
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Form2.resources
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Form3.resources
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Form4.resources

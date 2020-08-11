@@ -151,7 +151,13 @@ namespace AdonaiSoft_Utilitario
                             Form3 txtmodel = new Form3(model);
                             txtmodel.Show();
                         }
-                        
+                        if (cheController.Checked)
+                        {
+                            String model = Util.Controller(coluna, tipo, txtPakage.Text, txtClasse.Text, txtTabela.Text);
+                            Form4 txtmodel = new Form4(model);
+                            txtmodel.Show();
+                        }
+
                     }
 
             }
