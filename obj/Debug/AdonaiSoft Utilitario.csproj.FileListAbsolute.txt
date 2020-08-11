@@ -1,0 +1,45 @@
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csprojAssemblyReference.cache
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\AdonaiSoft Utilitario.exe.config
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\AdonaiSoft Utilitario.exe
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\AdonaiSoft Utilitario.pdb
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\MahApps.Metro.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\MetroFramework.Design.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\MetroFramework.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\MetroFramework.Fonts.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\Npgsql.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Buffers.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Memory.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Numerics.Vectors.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Text.Encodings.Web.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Text.Json.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Threading.Tasks.Extensions.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.ValueTuple.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Windows.Interactivity.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\MahApps.Metro.pdb
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\MahApps.Metro.xml
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\Npgsql.xml
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Buffers.xml
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Memory.xml
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Numerics.Vectors.xml
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Text.Encodings.Web.xml
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Text.Json.xml
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.Threading.Tasks.Extensions.xml
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\System.ValueTuple.xml
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\Resources\Icons.baml
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\Resources\IconsNonShared.baml
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario_Content.g.cs
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario_MarkupCompile.cache
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.g.resources
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Form1.resources
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Properties.Resources.resources
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csproj.GenerateResource.cache
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csproj.CoreCompileInputs.cache
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csproj.CopyComplete
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.exe
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.pdb
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Form2.resources
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Form3.resources
