@@ -157,7 +157,7 @@ namespace AdonaiSoft_Utilitario.Utilitario
             codigo = codigo + "    @PostMapping(" + aspas + "/"+ atributo + aspas + ") \n";
             codigo = codigo + "    public ResponseEntity<?> save(@RequestHeader(value = "+aspas+ "Authorization"+aspas+"String token, @RequestBody "+classe+"Model "+ atributo + ") throws SQLException {\n\n\n";
 
-            codigo = codigo + "        "+classe + "Controller " + atributo + "controller = new " + classe + "Controller;\n";
+            codigo = codigo + "        "+classe + "Controller " + atributo + "Controller = new " + classe + "Controller;\n";
             codigo = codigo + "        Object obj = " + atributo + "controller.save(token," + atributo+");\n";
             codigo = codigo + "        return ResponseEntity.ok().body(obj);\n\n";
             codigo = codigo + "    }\n\n\n";
@@ -172,8 +172,8 @@ namespace AdonaiSoft_Utilitario.Utilitario
             codigo = codigo + "        if(criterios.equals("+aspas+"a" + aspas + ")){\n\n";
             codigo = codigo + "            criterios = " + aspas + "" + aspas + ";\n";
             codigo = codigo + "         }\n\n";
-            codigo = codigo + "        "+classe + "Controller " + atributo + "controller = new " + classe + "Controller;\n";
-            codigo = codigo + "        obj = " + atributo + "controller.get(token, pagina, criterios);\n";
+            codigo = codigo + "        "+classe + "Controller " + atributo + "Controller = new " + classe + "Controller;\n";
+            codigo = codigo + "        obj = " + atributo + "Controller.get(token, pagina, criterios);\n";
             codigo = codigo + "        return ResponseEntity.ok().body(obj);\n\n";
             codigo = codigo + "    }\n\n\n";
 
@@ -184,8 +184,8 @@ namespace AdonaiSoft_Utilitario.Utilitario
 
 
             codigo = codigo + "        Object obj = " + aspas + "" + aspas + ";";
-            codigo = codigo + "        "+ classe + "Controller " + atributo + "controller = new " + classe + "Controller;\n";
-            codigo = codigo + "        obj = " + atributo + "controller.getbyId(token, id);\n";
+            codigo = codigo + "        "+ classe + "Controller " + atributo + "Controller = new " + classe + "Controller;\n";
+            codigo = codigo + "        obj = " + atributo + "Controller.getbyId(token, id);\n";
             codigo = codigo + "        return ResponseEntity.ok().body(obj);\n\n";
             codigo = codigo + "    }\n";
 
@@ -194,7 +194,7 @@ namespace AdonaiSoft_Utilitario.Utilitario
             return codigo;
         }
 
-        public static String Controller(String[] coluna, String[] tipo, String package, String classe, String tabela)
+        public static String Controller(String[] coluna, String[] tipo, String package, String classe, String tabela,String[] fk, String[] fktableref )
         {
 
             String atributo = "";
@@ -207,22 +207,24 @@ namespace AdonaiSoft_Utilitario.Utilitario
             String codigo = "package " + package + ".controller;\n\n";
 
 
-            codigo = codigo + "public class " + classe + "Controller {\n\n\n";
-            codigo = codigo = "Connect connection = new Connection();\n";
-            codigo = codigo = "UtilController util = new UtilController();\n";
-            codigo = codigo = "String sql ="+aspas+""+aspas+" ;\n";
-            codigo = codigo = "String descricao = "+aspas+"Cadastro."+classe+";\n";
-            codigo = codigo = "String log =" + aspas + "" + aspas + " ;\n";
+            codigo = codigo + "    public class " + classe + "Controller {\n\n\n";
+            codigo = codigo + "    Connect connection = new Connection();\n";
+            codigo = codigo + "    UtilController util = new UtilController();\n";
+            codigo = codigo + "    String sql ="+aspas+""+aspas+" ;\n";
+            codigo = codigo + "    String descricao = "+aspas+"Cadastro."+classe+";\n";
+            codigo = codigo + "    String log =" + aspas + "" + aspas + " ;\n\n\n\n";
 
             aux = classe;
             atributo = char.ToLower(aux[0]) + aux.Substring(1);
 
             // save
-            codigo = codigo + "    public "+classe+"save(String token, "+classe+"Model) throws SQLException {\n\n\n";
+            codigo = codigo + "    public Object save(String token, "+classe+ "Model  "+ atributo + ") throws SQLException {\n\n\n";
 
             codigo = codigo + "        Connection con = null;\n";
             codigo = codigo + "        PreparedStatement stmt = null;\n";
             codigo = codigo + "        ResultSet rs = null;\n\n\n";
+
+            codigo = codigo + "        Hashtable retorno = new Hashtable();n\n\n";
 
             codigo = codigo + "        int scalar = 0;\n\n";
 
@@ -234,16 +236,16 @@ namespace AdonaiSoft_Utilitario.Utilitario
             codigo = codigo + "        con.setAutoCommit(false);\n\n";
 
             // add
-            codigo = codigo + "            if("+classe+"Model.isAdd()){\n\n";
+            codigo = codigo + "            if("+ atributo + ".isAdd()){\n\n";
 
-            String values = "?";
+            String values = "";
             for(int i = 1;i < coluna.Length; i++)
             {
                 sql = sql + ", " +coluna[i];
-                values = values + ", ?";
+                values = values + "?, ";
             }
 
-            codigo = codigo + "                "+aspas+"INSERT INTO "+tabela+"("+ sql+") VALUES("+ values+");" + aspas+"\n\n\n";
+            codigo = codigo + "                sql = "+aspas+"INSERT INTO "+tabela+"("+ sql+") VALUES("+ values+");" + aspas+";\n\n\n";
             codigo = codigo + "                stmt = con.prepareStatement(sql);\n\n\n\n";
             int a = 1;
             for (int i = 1; i < coluna.Length; i++)
@@ -293,7 +295,7 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 column = char.ToUpper(aux[0]) + aux.Substring(1);
                
                 
-                codigo = codigo + "                "+a+", "+tipoatributo + atributo+".get"+ column + "());\n";
+                codigo = codigo + "                "+tipoatributo+ +a+", " + atributo+".get"+ column + "());\n";
                 a = a + 1;
             }
             codigo = codigo + "                stmt.execute();\n\n\n\n";
@@ -302,19 +304,19 @@ namespace AdonaiSoft_Utilitario.Utilitario
 
 
             // edit
-            codigo = codigo + "            if(" + classe + "Model.isEdit()){\n\n";
+            codigo = codigo + "            if(" + atributo + ".isEdit()){\n\n";
 
-            
+            sql = "";
             for (int i = 1; i < coluna.Length; i++)
             {
-                sql = sql + coluna[i]+ "=?, ";
+                sql = sql + coluna[i]+ " = ?, ";
             }
 
             
 
-            codigo = codigo + "                " + aspas + "UPDATE " + tabela + " SET " + sql + " WHERE id = ? ;" + aspas + "\n\n\n";
+            codigo = codigo + "                sql = " + aspas + "UPDATE " + tabela + " SET " + sql + " WHERE id = ? ;" + aspas + "\n\n\n";
             codigo = codigo + "                stmt = con.prepareStatement(sql);\n\n\n\n";
-
+            a = 1;
             for (int i = 1; i < coluna.Length; i++)
             {
                 if (tipo[i].Equals("integer"))
@@ -362,9 +364,10 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 column = char.ToUpper(aux[0]) + aux.Substring(1);
 
 
-                codigo = codigo + "                " + tipoatributo + atributo + ".get" + column + "());\n";
+                codigo = codigo + "                " + tipoatributo + a + ", " + atributo + ".get" + column + "());\n";
+                a = a + 1;
             }
-            codigo = codigo + "                " + tipoatributo + atributo + ".getId());\n";
+            codigo = codigo + "                " + tipoatributo + a + ", " + atributo + ".getId());\n";
 
             codigo = codigo + "                stmt.execute();\n\n\n\n";
             codigo = codigo + "                log = " + aspas + "Editou" + aspas + ";\n\n\n\n";
@@ -372,22 +375,77 @@ namespace AdonaiSoft_Utilitario.Utilitario
 
 
             // del
-            codigo = codigo + "            if(" + classe + "Model.isDel()){\n\n";
+            codigo = codigo + "            if(" + atributo + ".isDel()){\n\n";
 
             aux = coluna[0];
             column = char.ToLower(aux[0]) + aux.Substring(1);
 
-            codigo = codigo + "                " + aspas + "DELETE FROM " + tabela + " WHERE id ="+ column + ".getId();" + aspas + "\n\n\n";
-            codigo = codigo + "                stmt = con.prepareStatement(sql);\n\n\n\n";
-            codigo = codigo + "                stmt.execute();\n\n\n\n";
+            codigo = codigo + "                sql = " + aspas + "DELETE FROM " + tabela + " WHERE id = "+ atributo + ".getId();" + aspas + "\n\n\n";
+            codigo = codigo + "                stmt = con.prepareStatement(sql);\n\n";
+            codigo = codigo + "                stmt.execute();\n\n";
 
            
-            codigo = codigo + "                log = " + aspas + "Apagou" + aspas + ";\n\n\n\n";
+            codigo = codigo + "                log = " + aspas + "Apagou" + aspas + ";\n\n";
             codigo = codigo + "            }\n\n\n\n";
 
+            codigo = codigo + "            retorno.put("+aspas+"ret"+aspas+", "+aspas+"success"+aspas+");\n";
+            codigo = codigo + "            retorno.put(" + aspas + "motivo" + aspas + ", " + aspas + "OK" + aspas + ");\n";
+            codigo = codigo + "            retorno.put(" + aspas + "obj" + aspas + ", " + atributo + ");\n";
 
 
+            codigo = codigo + "        }\n";
+            codigo = codigo + "        catch(SQLException e) {\n\n";
+            codigo = codigo + "            retorno.put(" + aspas + "ret" + aspas + ", " + aspas + "unsuccess" + aspas + ");\n";
+            codigo = codigo + "            retorno.put(" + aspas + "motivo" + aspas + ", e.getMessage());\n\n";
+            codigo = codigo + "        }\n";
+            codigo = codigo + "        finally {\n";
+            codigo = codigo + "            con.close();\n";
+            codigo = codigo + "            rs.close();\n";
+            codigo = codigo + "            stmt.close();\n";
+            codigo = codigo + "        }\n\n";
+            codigo = codigo + "        return retorno;\n";
             codigo = codigo + "    }\n";
+
+
+            codigo = codigo + "    public Object getById(String token, int id) throws SQLException {\n\n\n";
+
+            codigo = codigo + "        sql = "+aspas+"SELECT  "+aspas+";\n";
+
+            codigo = codigo + "        Connection con = null;\n";
+            codigo = codigo + "        PreparedStatement stmt = null;\n";
+            codigo = codigo + "        ResultSet rs = null;\n";
+            codigo = codigo + "        Hashtable retorno = new Hashtable();\n\n\n";
+
+            codigo = codigo + "        try{\n\n";
+
+            codigo = codigo + "            String decode = Util.decode(token);\n";
+            codigo = codigo + "            con = connection.Conexao(decode);\n";
+            codigo = codigo + "            stmt = con.prepareStatement(sql);\n";
+            codigo = codigo + "            rs = stmt.executeQuery();\n\n";
+
+            codigo = codigo + "            while(rs.next()){\n";
+
+
+            codigo = codigo + "            }\n";
+
+            codigo = codigo + "            retorno.put(" + aspas + "ret" + aspas + ", " + aspas + "success" + aspas + ");\n";
+            codigo = codigo + "            retorno.put(" + aspas + "motivo" + aspas + ", " + aspas + "OK" + aspas + ");\n";
+            codigo = codigo + "            retorno.put(" + aspas + "obj" + aspas + ", " + atributo + ");\n";
+
+
+            codigo = codigo + "        }\n";
+            codigo = codigo + "        catch(SQLException e) {\n\n";
+            codigo = codigo + "            retorno.put(" + aspas + "ret" + aspas + ", " + aspas + "unsuccess" + aspas + ");\n";
+            codigo = codigo + "            retorno.put(" + aspas + "motivo" + aspas + ", e.getMessage());\n\n";
+            codigo = codigo + "        }\n";
+            codigo = codigo + "        finally {\n";
+            codigo = codigo + "            con.close();\n";
+            codigo = codigo + "            rs.close();\n";
+            codigo = codigo + "            stmt.close();\n";
+            codigo = codigo + "        }\n\n";
+            codigo = codigo + "        return retorno;\n";
+            codigo = codigo + "    }\n";
+
 
             codigo = codigo + "}\n\n\n";
 
