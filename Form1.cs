@@ -26,7 +26,7 @@ namespace AdonaiSoft_Utilitario
 
         private void metroButton1_Click(object sender, EventArgs e)
         {
-            NpgsqlConnection conO = new NpgsqlConnection("Host=" + LocalDestino.Text + ";Username=postgres;Password=1816;Database=adonai_9999");
+            NpgsqlConnection conO = new NpgsqlConnection("Host=" + cmbLocalDestino.Text + ";Username=postgres;Password=1816;Database=adonai_9999");
             conO.Open();
 
             String sql = "select IDPessoa from Pessoa_igreja";
@@ -39,7 +39,7 @@ namespace AdonaiSoft_Utilitario
                     while (rs.Read())
                     {
 
-                        NpgsqlConnection conD = new NpgsqlConnection("Host=" + LocalDestino.Text + ";Username=postgres;Password=1816;Database=adonai_" + Convert.ToString(rs.GetInt32(rs.GetOrdinal("IDPessoa"))));
+                        NpgsqlConnection conD = new NpgsqlConnection("Host=" + cmbLocalDestino.Text + ";Username=postgres;Password=1816;Database=adonai_" + Convert.ToString(rs.GetInt32(rs.GetOrdinal("IDPessoa"))));
                         conD.Open();
 
                         NpgsqlCommand commandD = new NpgsqlCommand(comandosql.Text, conD);
@@ -70,7 +70,7 @@ namespace AdonaiSoft_Utilitario
 
         private void metroButton2_Click(object sender, EventArgs e)
         {
-            NpgsqlConnection conO = new NpgsqlConnection("Host=" + LocalDestino.Text + ";Username=postgres;Password=1816;Database=" + baseOriginal.Text);
+            NpgsqlConnection conO = new NpgsqlConnection("Host=" + cmbLocalDestino.Text + ";Username=postgres;Password=1816;Database=" + baseOriginal.Text);
             conO.Open();
 
             try
@@ -98,7 +98,7 @@ namespace AdonaiSoft_Utilitario
             {
                 try
                 {
-                    NpgsqlConnection con = new NpgsqlConnection("Host="+ txtLocalBanco.Text+";Username="+txtUser.Text+";Password="+txtPassword.Text+";Database="+txtDataBase.Text);
+                    NpgsqlConnection con = new NpgsqlConnection("Host="+ cmbLocalDestino.Text+";Username="+txtUser.Text+";Password="+txtPassword.Text+";Database="+txtDataBase.Text);
                     con.Open();
 
                     String sql = "SELECT COUNT(column_name) as p FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + txtTabela.Text + "'";
@@ -239,16 +239,6 @@ namespace AdonaiSoft_Utilitario
                 MessageBox.Show("Ainda não configurado", "Atenção", MessageBoxButtons.OK);
             }
             
-        }
-
-        private void metroTextBox2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtDataBase_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
