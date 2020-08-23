@@ -95,22 +95,24 @@
             this.metroTabPage1.Size = new System.Drawing.Size(746, 369);
             this.metroTabPage1.TabIndex = 0;
             this.metroTabPage1.Text = "Banco de Dados";
+            this.metroTabPage1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTabPage1.VerticalScrollbarBarColor = true;
             this.metroTabPage1.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage1.VerticalScrollbarSize = 10;
             // 
             // cmbLocalDestino
             // 
+            this.cmbLocalDestino.DisplayMember = "0";
             this.cmbLocalDestino.FormattingEnabled = true;
             this.cmbLocalDestino.ItemHeight = 23;
             this.cmbLocalDestino.Items.AddRange(new object[] {
-            "localhost",
-            "207.244.225.189"});
+            "localhost"});
             this.cmbLocalDestino.Location = new System.Drawing.Point(4, 54);
             this.cmbLocalDestino.Name = "cmbLocalDestino";
             this.cmbLocalDestino.Size = new System.Drawing.Size(343, 29);
             this.cmbLocalDestino.TabIndex = 10;
             this.cmbLocalDestino.UseSelectable = true;
+            this.cmbLocalDestino.ValueMember = "0";
             // 
             // metroButton2
             // 
@@ -610,7 +612,9 @@
             this.Controls.Add(this.metroTabControl1);
             this.MaximizeBox = false;
             this.Name = "Form1";
+            this.Style = MetroFramework.MetroColorStyle.Black;
             this.Text = "AdonaiSoft Util";
+            this.TransparencyKey = System.Drawing.Color.BlueViolet;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.metroTabControl1.ResumeLayout(false);
             this.metroTabPage1.ResumeLayout(false);

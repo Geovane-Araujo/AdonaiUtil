@@ -1,4 +1,3 @@
-E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csprojAssemblyReference.cache
 E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\AdonaiSoft Utilitario.exe.config
 E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\AdonaiSoft Utilitario.exe
 E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\AdonaiSoft Utilitario.pdb
@@ -35,12 +34,12 @@ E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario_Conten
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario_MarkupCompile.cache
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.g.resources
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Form1.resources
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Form2.resources
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Form3.resources
+E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Form4.resources
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Properties.Resources.resources
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csproj.GenerateResource.cache
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csproj.CoreCompileInputs.cache
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csproj.CopyComplete
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.exe
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.pdb
-E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Form2.resources
-E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Form3.resources
-E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.Form4.resources
