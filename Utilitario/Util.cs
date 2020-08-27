@@ -198,12 +198,12 @@ namespace AdonaiSoft_Utilitario.Utilitario
             if(requerToken == true)
             {
                 codigo += "    public ResponseEntity<?> save(@RequestHeader(value = " +aspas+ "Authorization"+aspas+")String token, @RequestBody "+classe+" "+ atributo.ToLower() + ") throws SQLException {\n\n";
-                codigo += "        Object obj = " + atr.ToLower() + ".save(token," + atributo+"model);\n";
+                codigo += "        Object obj = " + atr.ToLower() + ".save(token," + atributo.ToLower()+");\n";
             }
             else
             {
                 codigo += "    public ResponseEntity<?> save(@RequestBody " + classe + " " + atributo.ToLower() + ") throws SQLException {\n\n";
-                codigo += "        Object obj = " + atr.ToLower() + ".save(" + atributo.ToLower() + "model);\n";
+                codigo += "        Object obj = " + atr.ToLower() + ".save(" + atributo.ToLower() + ");\n";
             }
             
             codigo += "        return ResponseEntity.ok().body(obj);\n\n";
