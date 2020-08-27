@@ -17,12 +17,15 @@ namespace AdonaiSoft_Utilitario.Utilitario
             var aux = "";
             var aux2 = "";
 
-            String codigo = "package " + package + ";\n\n";
+            String codigo = "package " + package + ".model;\n\n";
             codigo += "import java.io.Serializable; \n\n";
-            codigo += "public class " + classe + "Model implements Serializable {\n\n\n";
+            codigo += "public class " + classe + " implements Serializable {\n\n\n";
             codigo += "    private static final long serialVersionUID = 1L;\n\n";
+            codigo += "    private boolean add;\n\n";
+            codigo += "    private boolean edit;\n\n";
+            codigo += "    private boolean del;\n\n";
 
-            for(int i = 0;i < coluna.Length; i++)
+            for (int i = 0;i < coluna.Length; i++)
             {
                 if (tipo[i].Equals("integer"))
                 {
@@ -69,6 +72,35 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 atributo = char.ToLower(aux[0]) + aux.Substring(1);
                 codigo += "    private " + tipoatributo + " " + atributo + "; \n\n";
             }
+
+            // getters and setters
+            codigo += "    public boolean isAdd() { \n";
+            codigo += "        return add;\n";
+            codigo += "    }\n\n";
+
+
+            codigo += "    public void setAdd(boolean add) { \n";
+            codigo += "        this.add = add;\n";
+            codigo += "    }\n\n";
+
+            codigo += "    public boolean isEdit() { \n";
+            codigo += "        return edit;\n";
+            codigo += "    }\n\n";
+
+
+            codigo += "    public void setEdit(boolean edit) { \n";
+            codigo += "        this.edit = edit;\n";
+            codigo += "    }\n\n";
+
+            codigo += "    public boolean isDel() { \n";
+            codigo += "        return del;\n";
+            codigo += "    }\n\n";
+
+
+            codigo += "    public void setDel(boolean del) { \n";
+            codigo += "        this.del = del;\n";
+            codigo += "    }\n\n";
+
 
             for (int i = 0; i < coluna.Length; i++)
             {
@@ -134,7 +166,7 @@ namespace AdonaiSoft_Utilitario.Utilitario
             return codigo;
         }
 
-        public static String Resource(String[] coluna, String[] tipo, String package, String classe)
+        public static String Resource(String[] coluna, String[] tipo, String package, String classe,String endPoint, Boolean requerToken)
         {
             
             String atributo = "";
@@ -142,12 +174,16 @@ namespace AdonaiSoft_Utilitario.Utilitario
             char aspas = (char) 34;
 
             String codigo = "package " + package + ".resource;\n\n";
+
+            codigo += "import com.adonaisoft.AdonaiSoft.controller."+classe+"Controller;\n";
+            codigo += "import com.adonaisoft.AdonaiSoft.model." + classe + ";\n";
             codigo += "import org.springframework.http.ResponseEntity; \n";
             codigo += "import org.springframework.web.bind.annotation.*; \n";
+            codigo += "import org.springframework.beans.factory.annotation.Autowired; \n";
             codigo += "import java.sql.SQLException; \n\n\n";
 
             codigo += "@RestController \n";
-            codigo += "@RequestMapping(value = " +aspas+"/adonai"+aspas+") \n";
+            codigo += "@RequestMapping(value = " +aspas+"/"+ endPoint + aspas+") \n";
             codigo += "@CrossOrigin(origins =" + aspas + "*" + aspas + ") \n";
             codigo += "public class " + classe + "Resource {\n\n\n";
 
@@ -159,17 +195,33 @@ namespace AdonaiSoft_Utilitario.Utilitario
             codigo += "    private " + classe + "Controller " + atr.ToLower() + ";\n\n";
             // save
             codigo += "    @PostMapping(" + aspas + "/"+ atributo.ToLower() + aspas + ") \n";
-            codigo += "    public ResponseEntity<?> save(@RequestHeader(value = " +aspas+ "Authorization"+aspas+")String token, @RequestBody "+classe+" "+ atributo.ToLower() + ") throws SQLException {\n\n";
-
-            codigo += "        Object obj = " + atr.ToLower() + ".save(token," + atributo+");\n";
+            if(requerToken == true)
+            {
+                codigo += "    public ResponseEntity<?> save(@RequestHeader(value = " +aspas+ "Authorization"+aspas+")String token, @RequestBody "+classe+" "+ atributo.ToLower() + ") throws SQLException {\n\n";
+                codigo += "        Object obj = " + atr.ToLower() + ".save(token," + atributo+"model);\n";
+            }
+            else
+            {
+                codigo += "    public ResponseEntity<?> save(@RequestBody " + classe + " " + atributo.ToLower() + ") throws SQLException {\n\n";
+                codigo += "        Object obj = " + atr.ToLower() + ".save(" + atributo.ToLower() + "model);\n";
+            }
+            
             codigo += "        return ResponseEntity.ok().body(obj);\n\n";
             codigo += "    }\n\n\n";
 
             // getbyId
             codigo += "    @GetMapping(" + aspas + "/" + atributo.ToLower() + "/{id}" + aspas + ") \n";
-            codigo += "    public ResponseEntity<?> get(@RequestHeader(value = " + aspas + "Authorization" + aspas + ")String token, @PathVariable(value=" + aspas + "id " + aspas + ") int id) throws SQLException {\n\n";
-
-            codigo += "        Object obj = " + atr.ToLower() + ".getbyId(token, id);\n";
+            if(requerToken == true)
+            {
+                
+                codigo += "    public ResponseEntity<?> get(@RequestHeader(value = " + aspas + "Authorization" + aspas + ")String token, @PathVariable(value=" + aspas + "id " + aspas + ") int id) throws SQLException {\n\n";
+                codigo += "        Object obj = " + atr.ToLower() + ".getbyId(token, id);\n";
+            }
+            else
+            {
+                codigo += "    public ResponseEntity<?> get(@PathVariable(value=" + aspas + "id " + aspas + ") int id) throws SQLException {\n\n";
+                codigo += "        Object obj = " + atr.ToLower() + ".getById(id);\n";
+            }
             codigo += "        return ResponseEntity.ok().body(obj);\n\n";
             codigo += "    }\n";
 
@@ -178,7 +230,7 @@ namespace AdonaiSoft_Utilitario.Utilitario
             return codigo;
         }
 
-        public static String Controller(String[] coluna, String[] tipo, String package, String classe, String tabela,String[] fk, String[] fktableref )
+        public static String Controller(String[] coluna, String[] tipo, String package, String classe, String tabela,String[] fk, String[] fktableref, Boolean requerToken, String dbTokenTalse)
         {
 
             String atributo = "";
@@ -191,46 +243,71 @@ namespace AdonaiSoft_Utilitario.Utilitario
             String codigo = "package " + package + ".controller;\n\n";
 
 
+            codigo += "    import "+package+".model."+classe+";\n";
+            codigo += "    import com.adonaisoft.AdonaiSoft.adonaisoftutil.UtilToken;\n";
+            codigo += "    import com.adonaisoft.AdonaiSoft.connection.Connect;\n";
+            codigo += "    import org.springframework.web.bind.annotation.RestController;\n";
+            codigo += "    import java.sql.Connection;\n";
+            codigo += "    import java.sql.PreparedStatement;\n";
+            codigo += "    import java.sql.ResultSet;\n";
+            codigo += "    import java.sql.SQLException;\n";
+            codigo += "    import java.util.Hashtable;\n\n";
+
+
+
+            codigo += "    @RestController\n";
             codigo += "    public class " + classe + "Controller {\n\n\n";
-            codigo += "    Connect connection = new Connection();\n";
+            codigo += "    Connect connection = new Connect();\n";
             codigo += "    UtilController util = new UtilController();\n";
             codigo += "    String sql =" +aspas+""+aspas+" ;\n";
-            codigo += "    String descricao = " +aspas+"Cadastro."+classe+";\n";
+            codigo += "    String descricao = " +aspas+"Cadastro."+classe+aspas+";\n";
             codigo += "    String log =" + aspas + "" + aspas + " ;\n\n\n\n";
 
             aux = classe;
             atributo = char.ToLower(aux[0]) + aux.Substring(1);
 
+            if(requerToken == true)
+            {
+                codigo += "    public Object save(String token, " +classe+ " "+ atributo.ToLower() + ") throws SQLException {\n\n";
+
+                codigo += "        Connection con = null;\n";
+                codigo += "        PreparedStatement stmt = null;\n";
+                codigo += "        ResultSet rs = null;\n\n";
+                codigo += "        Hashtable retorno = new Hashtable();\n\n";
+                codigo += "        int scalar = 0;\n\n";
+                codigo += "        try{\n\n";
+                codigo += "            String decode = UtilToken.decode(token);\n";
+                codigo += "            con = connection.Conexao(decode);\n\n";
+            }
+            else
+            {
+                codigo += "    public Object save(" + classe + " " + atributo.ToLower() + ") throws SQLException {\n\n";
+
+                codigo += "        Connection con = null;\n";
+                codigo += "        PreparedStatement stmt = null;\n";
+                codigo += "        ResultSet rs = null;\n\n";
+                codigo += "        Hashtable retorno = new Hashtable();\n\n";
+                codigo += "        int scalar = 0;\n\n";
+                codigo += "        try{\n\n";
+                codigo += "            con = connection.Conexao("+aspas+dbTokenTalse+aspas+");\n\n";
+            }
             // save
-            codigo += "    public Object save(String token, " +classe+ "Model  "+ atributo + ") throws SQLException {\n\n\n";
+            
 
-            codigo += "        Connection con = null;\n";
-            codigo += "        PreparedStatement stmt = null;\n";
-            codigo += "        ResultSet rs = null;\n\n\n";
-
-            codigo += "        Hashtable retorno = new Hashtable();n\n\n";
-
-            codigo += "        int scalar = 0;\n\n";
-
-            codigo += "        try{\n\n";
-
-            codigo += "        String decode = Util.decode(token);\n";
-            codigo += "        con = connection.Conexao(decode);\n\n";
-
-            codigo += "        con.setAutoCommit(false);\n\n";
+            codigo += "            con.setAutoCommit(false);\n\n";
 
             // add
-            codigo += "            if(" + atributo + ".isAdd()){\n\n";
+            codigo += "            if(" + atributo.ToLower() + ".isAdd()){\n\n";
 
             String values = "";
             for(int i = 1;i < coluna.Length; i++)
             {
-                sql = sql + ", " +coluna[i];
-                values += "?, ";
+                sql = sql +" " +coluna[i] + ",";
+                values += "?,";
             }
 
-            codigo += "                sql = " +aspas+"INSERT INTO "+tabela+"("+ sql+") VALUES("+ values+");" + aspas+";\n\n\n";
-            codigo += "                stmt = con.prepareStatement(sql);\n\n\n\n";
+            codigo += "                sql = " +aspas+"INSERT INTO "+tabela+"("+ sql.Substring(0,sql.Length - 1)+") VALUES("+ values.Substring(0,values.Length -1 )+");" + aspas+";\n\n";
+            codigo += "                stmt = con.prepareStatement(sql);\n\n";
             int a = 1;
             for (int i = 1; i < coluna.Length; i++)
             {
@@ -279,29 +356,29 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 column = char.ToUpper(aux[0]) + aux.Substring(1);
                
                 
-                codigo +=  "                "+tipoatributo+ +a+", " + atributo+".get"+ column + "());\n";
+                codigo +=  "                "+tipoatributo+ +a+", " + atributo.ToLower() + ".get"+ column + "());\n";
                 a = a + 1;
             }
-            codigo += "                stmt.execute();\n\n\n\n";
-            codigo += "                log = " +aspas+"Adicionaou"+aspas+";\n\n\n\n";
-            codigo += "            }\n\n\n\n";
+            codigo += "                \n\n";
+            codigo += "                log = " +aspas+"Adicionaou"+aspas+";\n";
+            codigo += "            }\n";
 
 
             // edit
-            codigo += "            if(" + atributo + ".isEdit()){\n\n";
+            codigo += "            else if(" + atributo.ToLower() + ".isEdit()){\n\n";
 
             sql = "";
             for (int i = 1; i < coluna.Length; i++)
             {
-                sql = sql + coluna[i]+ " = ?, ";
+                sql = sql + coluna[i]+ " = ?,";
             }
 
             
 
-            codigo += "                sql = " + aspas + "UPDATE " + tabela + " SET " + sql + " WHERE id = ? ;" + aspas + "\n\n\n";
-            codigo += "                stmt = con.prepareStatement(sql);\n\n\n\n";
+            codigo += "                sql = " + aspas + "UPDATE " + tabela + " SET " + sql.Substring(0,sql.Length - 1) + " WHERE id = ?" + aspas + ";\n\n";
+            codigo += "                stmt = con.prepareStatement(sql);\n\n";
             a = 1;
-            for (int i = 1; i < coluna.Length; i++)
+            for (int i = (coluna.Length - 1); i > 0; i--)
             {
                 if (tipo[i].Equals("integer"))
                 {
@@ -348,73 +425,92 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 column = char.ToUpper(aux[0]) + aux.Substring(1);
 
 
-                codigo = codigo + "                " + tipoatributo + a + ", " + atributo + ".get" + column + "());\n";
+                codigo = codigo + "                " + tipoatributo + a + ", " + atributo.ToLower() + ".get" + column + "());\n";
                 a = a + 1;
             }
-            codigo = codigo + "                " + tipoatributo + a + ", " + atributo + ".getId());\n";
+            codigo += "                stmt.setInt(" + a + ", " + atributo.ToLower() + ".getId());\n";
 
-            codigo += "                stmt.execute();\n\n\n\n";
-            codigo += "                log = " + aspas + "Editou" + aspas + ";\n\n\n\n";
-            codigo += "            }\n\n\n\n";
+            codigo += "                \n\n";
+            codigo += "                log = " + aspas + "Editou" + aspas + ";\n";
+            codigo += "            }\n";
 
 
             // del
-            codigo += "            if(" + atributo + ".isDel()){\n\n";
+            codigo += "            else if(" + atributo.ToLower() + ".isDel()){\n\n";
 
             aux = coluna[0];
             column = char.ToLower(aux[0]) + aux.Substring(1);
 
-            codigo += "                sql = " + aspas + "DELETE FROM " + tabela + " WHERE id = "+ atributo + ".getId();" + aspas + "\n\n\n";
+            codigo += "                sql = " + aspas + "DELETE FROM " + tabela + " WHERE id = "+aspas+"+"+ atributo.ToLower() + ".getId();\n\n";
             codigo += "                stmt = con.prepareStatement(sql);\n\n";
-            codigo += "                stmt.execute();\n\n";
 
-           
             codigo += "                log = " + aspas + "Apagou" + aspas + ";\n\n";
-            codigo += "            }\n\n\n\n";
+            codigo += "            }\n\n";
+
+            codigo += "            stmt.execute();\n";
+            codigo += "            con.commit();\n";
 
             codigo += "            retorno.put(" +aspas+"ret"+aspas+", "+aspas+"success"+aspas+");\n";
             codigo += "            retorno.put(" + aspas + "motivo" + aspas + ", " + aspas + "OK" + aspas + ");\n";
-            codigo += "            retorno.put(" + aspas + "obj" + aspas + ", " + atributo + ");\n";
+            codigo += "            retorno.put(" + aspas + "obj" + aspas + ", " + atributo.ToLower() + ");\n";
 
 
             codigo += "        }\n";
             codigo += "        catch(SQLException e) {\n\n";
             codigo += "            retorno.put(" + aspas + "ret" + aspas + ", " + aspas + "unsuccess" + aspas + ");\n";
-            codigo += "            retorno.put(" + aspas + "motivo" + aspas + ", e.getMessage());\n\n";
+            codigo += "            retorno.put(" + aspas + "motivo" + aspas + ", e.getMessage());\n";
             codigo += "        }\n";
             codigo += "        finally {\n";
             codigo += "            con.close();\n";
-            codigo += "            rs.close();\n";
             codigo += "            stmt.close();\n";
             codigo += "        }\n\n";
             codigo += "        return retorno;\n";
             codigo += "    }\n";
 
 
-            codigo += "    public Object getById(String token, int id) throws SQLException {\n\n\n";
+            if(requerToken == true)
+            {
+                codigo += "    public Object getById(String token, int id) throws SQLException {\n\n";
 
-            codigo += "        sql = " +aspas+"SELECT  "+aspas+";\n";
+                codigo += "        sql = " + aspas + "SELECT  " + aspas + ";\n";
 
-            codigo += "        Connection con = null;\n";
-            codigo += "        PreparedStatement stmt = null;\n";
-            codigo += "        ResultSet rs = null;\n";
-            codigo += "        Hashtable retorno = new Hashtable();\n\n\n";
+                codigo += "        Connection con = null;\n";
+                codigo += "        PreparedStatement stmt = null;\n";
+                codigo += "        ResultSet rs = null;\n";
+                codigo += "        Hashtable retorno = new Hashtable();\n\n";
 
-            codigo += "        try{\n\n";
+                codigo += "        try{\n\n";
 
-            codigo += "            String decode = Util.decode(token);\n";
-            codigo += "            con = connection.Conexao(decode);\n";
+                codigo += "            String decode = UtilToken.decode(token);\n";
+                codigo += "            con = connection.Conexao(decode);\n";
+            }
+            else
+            {
+                codigo += "    public Object getById(int id) throws SQLException {\n\n";
+
+                codigo += "        sql = " + aspas + "SELECT  " + aspas + ";\n";
+
+                codigo += "        Connection con = null;\n";
+                codigo += "        PreparedStatement stmt = null;\n";
+                codigo += "        ResultSet rs = null;\n";
+                codigo += "        Hashtable retorno = new Hashtable();\n\n";
+
+                codigo += "        try{\n\n";
+
+                codigo += "            con = connection.Conexao(" + aspas + dbTokenTalse + aspas + ");\n\n";
+            }
+            
             codigo += "            stmt = con.prepareStatement(sql);\n";
             codigo += "            rs = stmt.executeQuery();\n\n";
 
-            codigo += "            while(rs.next()){\n";
+            codigo += "            while(rs.next()){\n\n";
 
 
             codigo += "            }\n";
 
             codigo += "            retorno.put(" + aspas + "ret" + aspas + ", " + aspas + "success" + aspas + ");\n";
             codigo += "            retorno.put(" + aspas + "motivo" + aspas + ", " + aspas + "OK" + aspas + ");\n";
-            codigo += "            retorno.put(" + aspas + "obj" + aspas + ", " + atributo + ");\n";
+            codigo += "            //retorno.put(" + aspas + "obj" + aspas + ", " + atributo.ToLower() + ");\n";
 
 
             codigo += "        }\n";

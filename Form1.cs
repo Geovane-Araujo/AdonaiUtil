@@ -100,6 +100,8 @@ namespace AdonaiSoft_Utilitario
                 {
                     NpgsqlConnection con = new NpgsqlConnection("Host="+ txtLocalBanco.Text+";Username="+txtUser.Text+";Password="+txtPassword.Text+";Database="+txtDataBase.Text);
                     con.Open();
+                    NpgsqlConnection cona = new NpgsqlConnection("Host=" + txtLocalBanco.Text + ";Username=" + txtUser.Text + ";Password=" + txtPassword.Text + ";Database=" + txtDataBase.Text);
+                    cona.Open();
 
                     String sql = "SELECT COUNT(column_name) as p FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + txtTabela.Text + "'";
                     NpgsqlCommand command = new NpgsqlCommand(sql, con);
@@ -147,62 +149,63 @@ namespace AdonaiSoft_Utilitario
                         }
                         if (cheResource.Checked)
                         {
-                            String model = Util.Resource(coluna, tipo, txtPakage.Text, txtClasse.Text);
+                            String model = Util.Resource(coluna, tipo, txtPakage.Text, txtClasse.Text, txtendpoint.Text,cheToken.Checked);
                             Form3 txtmodel = new Form3(model);
                             txtmodel.Show();
                         }
                         if (cheController.Checked)
                         {
-                            sql = "SELECT COUNT(kcu.column_name) p "+
+                            String sqla = "SELECT COUNT(kcu.column_name) as p "+
                                 " FROM  information_schema.table_constraints AS tc "+
                                     "JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema " +
                                     "JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name AND ccu.table_schema = tc.table_schema" +
                                 " WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name = '"+ txtTabela.Text+ "' " +
-                                " group by kcu.column_name,ccu.table_name,ccu.column_name ORDER BY ORDINAL_POSITION";
+                                " group by kcu.column_name,ccu.table_name,ccu.column_name";
 
-                            NpgsqlCommand commandE = new NpgsqlCommand(sql, con);
-                            rs = commandE.ExecuteReader();
+                            NpgsqlCommand commandE = new NpgsqlCommand(sqla, cona);
+                            NpgsqlDataReader rsE = commandE.ExecuteReader();
 
                             count = 0;
-                            if (rs.HasRows)
+                            if (rsE.HasRows)
                             {
 
-                                while (rs.Read())
+                                while (rsE.Read())
                                 {
 
-                                    count = rs.GetInt32(rs.GetOrdinal("p"));
+                                    count++;
                                 }
                             }
-                            rs.Close();
+                            rsE.Close();
+                            cona.Close();
 
+                            cona.Open();
 
-
-                            sql = "SELECT kcu.column_name, ccu.table_name AS tabelaref, ccu.column_name AS columnref, tc.table_name," +
+                            sqla = "SELECT kcu.column_name, ccu.table_name AS tabelaref, ccu.column_name AS columnref, tc.table_name," +
                                 " ('INNER JOIN ' || ccu.table_name || ' ON ' || tc.table_name || '.' || kcu.column_name || ' = ' || ccu.table_name || '.' || ccu.column_name )as fk " +
                                 " FROM  information_schema.table_constraints AS tc " +
                                     "JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema " +
                                     "JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name AND ccu.table_schema = tc.table_schema" +
                                 " WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name = 'pessoa_membro' " +
-                                " group by kcu.column_name,ccu.table_name,ccu.column_name, tc.table_name,";
+                                " group by kcu.column_name,ccu.table_name,ccu.column_name, tc.table_name ";
 
-                            NpgsqlCommand commandF = new NpgsqlCommand(sql, con);
-                            rs = commandF.ExecuteReader();
+                            commandE = new NpgsqlCommand(sqla, cona);
+                            rsE = commandE.ExecuteReader();
 
 
                             String[] fk = new string[count];
                             String[] fktableref = new string[count];
 
-                            if (rs.HasRows)
+                            if (rsE.HasRows)
                             {
                                 i = 0;
-                                while (rs.Read())
+                                while (rsE.Read())
                                 {
-                                    fk[i] = rs.GetString(rs.GetOrdinal("fk"));
-                                    fktableref[i] = rs.GetString(rs.GetOrdinal("tabelaref"));
+                                    fk[i] = rsE.GetString(rsE.GetOrdinal("fk"));
+                                    fktableref[i] = rsE.GetString(rsE.GetOrdinal("tabelaref"));
                                     i = i + 1;
                                 }
                             }
-                            rs.Close();
+                            rsE.Close();
                             String Tabelasref = "";
                             for(i = 0;  i < fktableref.Length; i++)
                             {
@@ -217,7 +220,7 @@ namespace AdonaiSoft_Utilitario
                                 
                             }
 
-                            String model = Util.Controller(coluna, tipo, txtPakage.Text, txtClasse.Text, txtTabela.Text, fk, fktableref);
+                            String model = Util.Controller(coluna, tipo, txtPakage.Text, txtClasse.Text, txtTabela.Text, fk, fktableref, cheToken.Checked, txtdbRequerTokenFalse.Text);
                             Form4 txtmodel = new Form4(model);
                             txtmodel.Show();
                         }

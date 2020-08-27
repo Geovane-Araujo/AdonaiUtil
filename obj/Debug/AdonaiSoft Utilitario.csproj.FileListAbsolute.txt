@@ -43,4 +43,3 @@ E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csproj
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csproj.CopyComplete
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.exe
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.pdb
-E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csprojAssemblyReference.cache
