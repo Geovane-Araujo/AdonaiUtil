@@ -215,7 +215,7 @@ namespace AdonaiSoft_Utilitario.Utilitario
             {
                 
                 codigo += "    public ResponseEntity<?> get(@RequestHeader(value = " + aspas + "Authorization" + aspas + ")String token, @PathVariable(value=" + aspas + "id " + aspas + ") int id) throws SQLException {\n\n";
-                codigo += "        Object obj = " + atr.ToLower() + ".getbyId(token, id);\n";
+                codigo += "        Object obj = " + atr.ToLower() + ".getById(token, id);\n";
             }
             else
             {
