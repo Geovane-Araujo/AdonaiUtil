@@ -40,6 +40,11 @@
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.baseOriginal = new MetroFramework.Controls.MetroTextBox();
             this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
+            this.metroLabel13 = new MetroFramework.Controls.MetroLabel();
+            this.txtdbRequerTokenFalse = new MetroFramework.Controls.MetroTextBox();
+            this.cheToken = new MetroFramework.Controls.MetroCheckBox();
+            this.metroLabel12 = new MetroFramework.Controls.MetroLabel();
+            this.txtendpoint = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel11 = new MetroFramework.Controls.MetroLabel();
             this.txtClasse = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
@@ -61,14 +66,14 @@
             this.txtUser = new MetroFramework.Controls.MetroTextBox();
             this.txtLocalBanco = new MetroFramework.Controls.MetroTextBox();
             this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
-            this.txtendpoint = new MetroFramework.Controls.MetroTextBox();
-            this.metroLabel12 = new MetroFramework.Controls.MetroLabel();
-            this.cheToken = new MetroFramework.Controls.MetroCheckBox();
-            this.txtdbRequerTokenFalse = new MetroFramework.Controls.MetroTextBox();
-            this.metroLabel13 = new MetroFramework.Controls.MetroLabel();
+            this.metroTabPage4 = new MetroFramework.Controls.MetroTabPage();
+            this.metroButton5 = new MetroFramework.Controls.MetroButton();
+            this.metroButton4 = new MetroFramework.Controls.MetroButton();
+            this.txtidbanco = new MetroFramework.Controls.MetroTextBox();
             this.metroTabControl1.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
             this.metroTabPage2.SuspendLayout();
+            this.metroTabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // metroTabControl1
@@ -76,9 +81,10 @@
             this.metroTabControl1.Controls.Add(this.metroTabPage1);
             this.metroTabControl1.Controls.Add(this.metroTabPage2);
             this.metroTabControl1.Controls.Add(this.metroTabPage3);
+            this.metroTabControl1.Controls.Add(this.metroTabPage4);
             this.metroTabControl1.Location = new System.Drawing.Point(8, 63);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 1;
+            this.metroTabControl1.SelectedIndex = 3;
             this.metroTabControl1.Size = new System.Drawing.Size(754, 457);
             this.metroTabControl1.TabIndex = 0;
             this.metroTabControl1.UseSelectable = true;
@@ -98,7 +104,7 @@
             this.metroTabPage1.HorizontalScrollbarSize = 10;
             this.metroTabPage1.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage1.Name = "metroTabPage1";
-            this.metroTabPage1.Size = new System.Drawing.Size(746, 369);
+            this.metroTabPage1.Size = new System.Drawing.Size(746, 415);
             this.metroTabPage1.TabIndex = 0;
             this.metroTabPage1.Text = "Banco de Dados";
             this.metroTabPage1.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -243,6 +249,100 @@
             this.metroTabPage2.VerticalScrollbarBarColor = true;
             this.metroTabPage2.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage2.VerticalScrollbarSize = 10;
+            // 
+            // metroLabel13
+            // 
+            this.metroLabel13.AutoSize = true;
+            this.metroLabel13.Location = new System.Drawing.Point(0, 361);
+            this.metroLabel13.Name = "metroLabel13";
+            this.metroLabel13.Size = new System.Drawing.Size(133, 19);
+            this.metroLabel13.TabIndex = 27;
+            this.metroLabel13.Text = "DataBase Connection";
+            // 
+            // txtdbRequerTokenFalse
+            // 
+            // 
+            // 
+            // 
+            this.txtdbRequerTokenFalse.CustomButton.Image = null;
+            this.txtdbRequerTokenFalse.CustomButton.Location = new System.Drawing.Point(267, 1);
+            this.txtdbRequerTokenFalse.CustomButton.Name = "";
+            this.txtdbRequerTokenFalse.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.txtdbRequerTokenFalse.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtdbRequerTokenFalse.CustomButton.TabIndex = 1;
+            this.txtdbRequerTokenFalse.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtdbRequerTokenFalse.CustomButton.UseSelectable = true;
+            this.txtdbRequerTokenFalse.CustomButton.Visible = false;
+            this.txtdbRequerTokenFalse.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.txtdbRequerTokenFalse.Lines = new string[] {
+        "adonai"};
+            this.txtdbRequerTokenFalse.Location = new System.Drawing.Point(3, 383);
+            this.txtdbRequerTokenFalse.MaxLength = 32767;
+            this.txtdbRequerTokenFalse.Name = "txtdbRequerTokenFalse";
+            this.txtdbRequerTokenFalse.PasswordChar = '\0';
+            this.txtdbRequerTokenFalse.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtdbRequerTokenFalse.SelectedText = "";
+            this.txtdbRequerTokenFalse.SelectionLength = 0;
+            this.txtdbRequerTokenFalse.SelectionStart = 0;
+            this.txtdbRequerTokenFalse.ShortcutsEnabled = true;
+            this.txtdbRequerTokenFalse.Size = new System.Drawing.Size(295, 29);
+            this.txtdbRequerTokenFalse.TabIndex = 26;
+            this.txtdbRequerTokenFalse.Text = "adonai";
+            this.txtdbRequerTokenFalse.UseSelectable = true;
+            this.txtdbRequerTokenFalse.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.txtdbRequerTokenFalse.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // cheToken
+            // 
+            this.cheToken.AutoSize = true;
+            this.cheToken.Location = new System.Drawing.Point(3, 331);
+            this.cheToken.Name = "cheToken";
+            this.cheToken.Size = new System.Drawing.Size(94, 15);
+            this.cheToken.TabIndex = 25;
+            this.cheToken.Text = "Requer Token";
+            this.cheToken.UseSelectable = true;
+            // 
+            // metroLabel12
+            // 
+            this.metroLabel12.AutoSize = true;
+            this.metroLabel12.Location = new System.Drawing.Point(421, 232);
+            this.metroLabel12.Name = "metroLabel12";
+            this.metroLabel12.Size = new System.Drawing.Size(60, 19);
+            this.metroLabel12.TabIndex = 24;
+            this.metroLabel12.Text = "EndPoint";
+            // 
+            // txtendpoint
+            // 
+            // 
+            // 
+            // 
+            this.txtendpoint.CustomButton.Image = null;
+            this.txtendpoint.CustomButton.Location = new System.Drawing.Point(267, 1);
+            this.txtendpoint.CustomButton.Name = "";
+            this.txtendpoint.CustomButton.Size = new System.Drawing.Size(27, 27);
+            this.txtendpoint.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtendpoint.CustomButton.TabIndex = 1;
+            this.txtendpoint.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtendpoint.CustomButton.UseSelectable = true;
+            this.txtendpoint.CustomButton.Visible = false;
+            this.txtendpoint.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.txtendpoint.Lines = new string[] {
+        "adonai"};
+            this.txtendpoint.Location = new System.Drawing.Point(421, 256);
+            this.txtendpoint.MaxLength = 32767;
+            this.txtendpoint.Name = "txtendpoint";
+            this.txtendpoint.PasswordChar = '\0';
+            this.txtendpoint.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtendpoint.SelectedText = "";
+            this.txtendpoint.SelectionLength = 0;
+            this.txtendpoint.SelectionStart = 0;
+            this.txtendpoint.ShortcutsEnabled = true;
+            this.txtendpoint.Size = new System.Drawing.Size(295, 29);
+            this.txtendpoint.TabIndex = 23;
+            this.txtendpoint.Text = "adonai";
+            this.txtendpoint.UseSelectable = true;
+            this.txtendpoint.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.txtendpoint.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // metroLabel11
             // 
@@ -608,106 +708,79 @@
             this.metroTabPage3.HorizontalScrollbarSize = 10;
             this.metroTabPage3.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage3.Name = "metroTabPage3";
-            this.metroTabPage3.Size = new System.Drawing.Size(746, 369);
+            this.metroTabPage3.Size = new System.Drawing.Size(746, 415);
             this.metroTabPage3.TabIndex = 2;
             this.metroTabPage3.Text = "Json to Java";
             this.metroTabPage3.VerticalScrollbarBarColor = true;
             this.metroTabPage3.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage3.VerticalScrollbarSize = 10;
             // 
-            // txtendpoint
+            // metroTabPage4
+            // 
+            this.metroTabPage4.Controls.Add(this.txtidbanco);
+            this.metroTabPage4.Controls.Add(this.metroButton5);
+            this.metroTabPage4.Controls.Add(this.metroButton4);
+            this.metroTabPage4.HorizontalScrollbarBarColor = true;
+            this.metroTabPage4.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroTabPage4.HorizontalScrollbarSize = 10;
+            this.metroTabPage4.Location = new System.Drawing.Point(4, 38);
+            this.metroTabPage4.Name = "metroTabPage4";
+            this.metroTabPage4.Size = new System.Drawing.Size(746, 415);
+            this.metroTabPage4.TabIndex = 3;
+            this.metroTabPage4.Text = "Migração Dados";
+            this.metroTabPage4.VerticalScrollbarBarColor = true;
+            this.metroTabPage4.VerticalScrollbarHighlightOnWheel = false;
+            this.metroTabPage4.VerticalScrollbarSize = 10;
+            // 
+            // metroButton5
+            // 
+            this.metroButton5.Location = new System.Drawing.Point(133, 18);
+            this.metroButton5.Name = "metroButton5";
+            this.metroButton5.Size = new System.Drawing.Size(104, 23);
+            this.metroButton5.TabIndex = 3;
+            this.metroButton5.Text = "|Membros";
+            this.metroButton5.UseSelectable = true;
+            this.metroButton5.Click += new System.EventHandler(this.metroButton5_Click);
+            // 
+            // metroButton4
+            // 
+            this.metroButton4.Location = new System.Drawing.Point(11, 18);
+            this.metroButton4.Name = "metroButton4";
+            this.metroButton4.Size = new System.Drawing.Size(104, 23);
+            this.metroButton4.TabIndex = 2;
+            this.metroButton4.Text = "Cargos";
+            this.metroButton4.UseSelectable = true;
+            this.metroButton4.Click += new System.EventHandler(this.metroButton4_Click);
+            // 
+            // txtidbanco
             // 
             // 
             // 
             // 
-            this.txtendpoint.CustomButton.Image = null;
-            this.txtendpoint.CustomButton.Location = new System.Drawing.Point(267, 1);
-            this.txtendpoint.CustomButton.Name = "";
-            this.txtendpoint.CustomButton.Size = new System.Drawing.Size(27, 27);
-            this.txtendpoint.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.txtendpoint.CustomButton.TabIndex = 1;
-            this.txtendpoint.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.txtendpoint.CustomButton.UseSelectable = true;
-            this.txtendpoint.CustomButton.Visible = false;
-            this.txtendpoint.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.txtendpoint.Lines = new string[] {
-        "adonai"};
-            this.txtendpoint.Location = new System.Drawing.Point(421, 256);
-            this.txtendpoint.MaxLength = 32767;
-            this.txtendpoint.Name = "txtendpoint";
-            this.txtendpoint.PasswordChar = '\0';
-            this.txtendpoint.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtendpoint.SelectedText = "";
-            this.txtendpoint.SelectionLength = 0;
-            this.txtendpoint.SelectionStart = 0;
-            this.txtendpoint.ShortcutsEnabled = true;
-            this.txtendpoint.Size = new System.Drawing.Size(295, 29);
-            this.txtendpoint.TabIndex = 23;
-            this.txtendpoint.Text = "adonai";
-            this.txtendpoint.UseSelectable = true;
-            this.txtendpoint.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.txtendpoint.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // metroLabel12
-            // 
-            this.metroLabel12.AutoSize = true;
-            this.metroLabel12.Location = new System.Drawing.Point(421, 232);
-            this.metroLabel12.Name = "metroLabel12";
-            this.metroLabel12.Size = new System.Drawing.Size(60, 19);
-            this.metroLabel12.TabIndex = 24;
-            this.metroLabel12.Text = "EndPoint";
-            // 
-            // cheToken
-            // 
-            this.cheToken.AutoSize = true;
-            this.cheToken.Location = new System.Drawing.Point(3, 331);
-            this.cheToken.Name = "cheToken";
-            this.cheToken.Size = new System.Drawing.Size(94, 15);
-            this.cheToken.TabIndex = 25;
-            this.cheToken.Text = "Requer Token";
-            this.cheToken.UseSelectable = true;
-            // 
-            // txtdbRequerTokenFalse
-            // 
-            // 
-            // 
-            // 
-            this.txtdbRequerTokenFalse.CustomButton.Image = null;
-            this.txtdbRequerTokenFalse.CustomButton.Location = new System.Drawing.Point(267, 1);
-            this.txtdbRequerTokenFalse.CustomButton.Name = "";
-            this.txtdbRequerTokenFalse.CustomButton.Size = new System.Drawing.Size(27, 27);
-            this.txtdbRequerTokenFalse.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.txtdbRequerTokenFalse.CustomButton.TabIndex = 1;
-            this.txtdbRequerTokenFalse.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.txtdbRequerTokenFalse.CustomButton.UseSelectable = true;
-            this.txtdbRequerTokenFalse.CustomButton.Visible = false;
-            this.txtdbRequerTokenFalse.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.txtdbRequerTokenFalse.Lines = new string[] {
-        "adonai"};
-            this.txtdbRequerTokenFalse.Location = new System.Drawing.Point(3, 383);
-            this.txtdbRequerTokenFalse.MaxLength = 32767;
-            this.txtdbRequerTokenFalse.Name = "txtdbRequerTokenFalse";
-            this.txtdbRequerTokenFalse.PasswordChar = '\0';
-            this.txtdbRequerTokenFalse.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtdbRequerTokenFalse.SelectedText = "";
-            this.txtdbRequerTokenFalse.SelectionLength = 0;
-            this.txtdbRequerTokenFalse.SelectionStart = 0;
-            this.txtdbRequerTokenFalse.ShortcutsEnabled = true;
-            this.txtdbRequerTokenFalse.Size = new System.Drawing.Size(295, 29);
-            this.txtdbRequerTokenFalse.TabIndex = 26;
-            this.txtdbRequerTokenFalse.Text = "adonai";
-            this.txtdbRequerTokenFalse.UseSelectable = true;
-            this.txtdbRequerTokenFalse.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.txtdbRequerTokenFalse.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // metroLabel13
-            // 
-            this.metroLabel13.AutoSize = true;
-            this.metroLabel13.Location = new System.Drawing.Point(0, 361);
-            this.metroLabel13.Name = "metroLabel13";
-            this.metroLabel13.Size = new System.Drawing.Size(133, 19);
-            this.metroLabel13.TabIndex = 27;
-            this.metroLabel13.Text = "DataBase Connection";
+            this.txtidbanco.CustomButton.Image = null;
+            this.txtidbanco.CustomButton.Location = new System.Drawing.Point(177, 1);
+            this.txtidbanco.CustomButton.Name = "";
+            this.txtidbanco.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.txtidbanco.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtidbanco.CustomButton.TabIndex = 1;
+            this.txtidbanco.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtidbanco.CustomButton.UseSelectable = true;
+            this.txtidbanco.CustomButton.Visible = false;
+            this.txtidbanco.Lines = new string[0];
+            this.txtidbanco.Location = new System.Drawing.Point(539, 18);
+            this.txtidbanco.MaxLength = 32767;
+            this.txtidbanco.Name = "txtidbanco";
+            this.txtidbanco.PasswordChar = '\0';
+            this.txtidbanco.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtidbanco.SelectedText = "";
+            this.txtidbanco.SelectionLength = 0;
+            this.txtidbanco.SelectionStart = 0;
+            this.txtidbanco.ShortcutsEnabled = true;
+            this.txtidbanco.Size = new System.Drawing.Size(199, 23);
+            this.txtidbanco.TabIndex = 4;
+            this.txtidbanco.UseSelectable = true;
+            this.txtidbanco.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.txtidbanco.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // Form1
             // 
@@ -727,6 +800,7 @@
             this.metroTabPage1.PerformLayout();
             this.metroTabPage2.ResumeLayout(false);
             this.metroTabPage2.PerformLayout();
+            this.metroTabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -770,6 +844,10 @@
         private MetroFramework.Controls.MetroCheckBox cheToken;
         private MetroFramework.Controls.MetroLabel metroLabel13;
         private MetroFramework.Controls.MetroTextBox txtdbRequerTokenFalse;
+        private MetroFramework.Controls.MetroTabPage metroTabPage4;
+        private MetroFramework.Controls.MetroButton metroButton5;
+        private MetroFramework.Controls.MetroButton metroButton4;
+        private MetroFramework.Controls.MetroTextBox txtidbanco;
     }
 }
 

@@ -243,5 +243,213 @@ namespace AdonaiSoft_Utilitario
             }
             
         }
+        // Cargos 
+        private void metroButton4_Click(object sender, EventArgs e)
+        {
+            System.Data.SqlClient.SqlDataReader rsO;
+            System.Data.SqlClient.SqlConnection conO;
+            System.Data.SqlClient.SqlCommand commandO;
+
+            String connectO = "Persist Security Info=False; Data Source=" + Environment.MachineName + "\\SQLEXPRESS;Initial Catalog=padrao;User ID=sa; Password=Adonai@#1816";
+            conO = new System.Data.SqlClient.SqlConnection(connectO);
+            conO.Open();
+
+
+            String sql = "select * from cargos ";
+            commandO = new System.Data.SqlClient.SqlCommand(sql, conO);
+            rsO = commandO.ExecuteReader();
+
+            NpgsqlConnection conD = new NpgsqlConnection("Host=localhost;Username=postgres;Password=1816;Database=adonai_" + txtidbanco.Text);
+            conD.Open();
+            
+
+            if (rsO.HasRows)
+            {
+                while (rsO.Read())
+                {
+                    String sqla = "INSERT INTO cargo(ID,Descricao) VALUES (@ID,@Descricao)";
+                    NpgsqlCommand commandD = new NpgsqlCommand(sqla, conD);
+
+                    commandD.Parameters.AddWithValue("@ID", rsO.GetInt32(rsO.GetOrdinal("ID")));
+                    commandD.Parameters.AddWithValue("@Descricao", rsO.GetString(rsO.GetOrdinal("Descricao")));
+
+                    commandD.ExecuteNonQuery();
+                    commandD.Dispose();
+                }
+            }
+            conD.Close();
+            conD.Dispose();
+            conO.Close();
+            conO.Dispose();
+            rsO.Close();
+            commandO.Dispose();
+        }
+
+        private void metroButton5_Click(object sender, EventArgs e)
+        {
+            System.Data.SqlClient.SqlDataReader rsO;
+            System.Data.SqlClient.SqlConnection conO;
+            System.Data.SqlClient.SqlCommand commandO;
+
+            String connectO = "Persist Security Info=False; Data Source=" + Environment.MachineName + "\\SQLEXPRESS;Initial Catalog=padrao;User ID=sa; Password=Adonai@#1816";
+            conO = new System.Data.SqlClient.SqlConnection(connectO);
+            conO.Open();
+
+            String sql = "DELETE from Membros WHERE ID > 1";
+            //commandO = new System.Data.SqlClient.SqlCommand(sql, conO);
+            //commandO.ExecuteNonQuery();
+            //commandO.Dispose();
+
+
+            sql = "select * from Membros";
+            commandO = new System.Data.SqlClient.SqlCommand(sql, conO);
+            rsO = commandO.ExecuteReader();
+
+            NpgsqlConnection conD = new NpgsqlConnection("Host=localhost;Username=postgres;Password=1816;Database=adonai_" + txtidbanco.Text);
+            conD.Open();
+
+
+            if (rsO.HasRows)
+            {
+                while (rsO.Read())
+                {
+                    //Pessoa
+                    String sqla = "INSERT INTO pessoa(nome,tipo,IDmultiigreja) VALUES (@nome,@tipo,@IDmultiigreja)";
+                    var commandD = new NpgsqlCommand(sqla, conD);
+
+                    commandD.Parameters.AddWithValue("@nome", rsO.GetString(rsO.GetOrdinal("nome")));
+                    commandD.Parameters.AddWithValue("@tipo", Convert.ToInt32(20));
+                    commandD.Parameters.AddWithValue("@IDmultiigreja", Convert.ToInt32(1));
+
+                    commandD.ExecuteNonQuery();
+                    commandD.Dispose();
+
+
+                    String sql1 = "SELECT ID FROM pessoa ORDER BY ID DESC LIMIT 1";
+                    var commandD1 = new NpgsqlCommand(sql1, conD);
+                    NpgsqlDataReader rs = commandD1.ExecuteReader();
+                    int idpessoa = 0;
+
+                    if (rs.HasRows)
+                    {
+                        while (rs.Read())
+                        {
+                            idpessoa = rs.GetInt32(rs.GetOrdinal("ID"));
+                        }
+                    }
+                    commandD1.Dispose();
+                    rs.Close();
+
+
+
+                    sqla = "INSERT INTO pessoa_membro(idpessoa, datanascimento, idcargo, estadocivil) VALUES (@idpessoa, @datanascimento, @idcargo,@estadocivil)";
+                    commandD = new NpgsqlCommand(sqla, conD);
+
+                    commandD.Parameters.AddWithValue("@idpessoa", Convert.ToInt32(idpessoa));
+                    if (!rsO.IsDBNull(rsO.GetOrdinal("DataNascimento")))
+                    {
+                        commandD.Parameters.AddWithValue("@datanascimento", rsO.GetDateTime(rsO.GetOrdinal("DataNascimento")));
+                    }
+                    else
+                    {
+                        commandD.Parameters.AddWithValue("@datanascimento",DBNull.Value);
+                    }
+                   
+                    commandD.Parameters.AddWithValue("@idcargo", rsO.GetInt32(rsO.GetOrdinal("IDCargo")));
+                    commandD.Parameters.AddWithValue("@estadocivil", rsO.GetString(rsO.GetOrdinal("EstadoCivil")));
+
+                    commandD.ExecuteNonQuery();
+                    commandD.Dispose();
+
+
+                    // ENDEREÇOS
+                    sqla = "INSERT INTO pessoa_endereco(idpessoa, endereco, bairro, idcidade, numero, cep, complemento, tipo) VALUES (@idpessoa, @endereco, @bairro, @idcidade, @numero, @cep, @complemento, @tipo)";
+                    commandD = new NpgsqlCommand(sqla, conD);
+
+                    // email principal
+                    commandD.Parameters.AddWithValue("@idpessoa", Convert.ToInt32(idpessoa));
+                    commandD.Parameters.AddWithValue("@endereco", rsO.GetString(rsO.GetOrdinal("Endereco")));
+                    commandD.Parameters.AddWithValue("@bairro", rsO.GetString(rsO.GetOrdinal("Bairro")));
+                    commandD.Parameters.AddWithValue("@idcidade", Convert.ToInt32(4102));
+                    commandD.Parameters.AddWithValue("@numero", rsO.GetString(rsO.GetOrdinal("numero")));
+                    commandD.Parameters.AddWithValue("@cep", rsO.GetString(rsO.GetOrdinal("cep")));
+                    commandD.Parameters.AddWithValue("@complemento", rsO.GetString(rsO.GetOrdinal("complemento")));
+                    commandD.Parameters.AddWithValue("@tipo", Convert.ToInt32(0));
+                    commandD.ExecuteNonQuery();
+
+                    commandD.Parameters.Clear();
+
+                    // email secundario
+                    commandD.Parameters.AddWithValue("@idpessoa", Convert.ToInt32(idpessoa));
+                    commandD.Parameters.AddWithValue("@endereco", "");
+                    commandD.Parameters.AddWithValue("@bairro", "");
+                    commandD.Parameters.AddWithValue("@idcidade", Convert.ToInt32(0));
+                    commandD.Parameters.AddWithValue("@numero", "");
+                    commandD.Parameters.AddWithValue("@cep", "");
+                    commandD.Parameters.AddWithValue("@complemento", "");
+                    commandD.Parameters.AddWithValue("@tipo", Convert.ToInt32(1));
+                    commandD.ExecuteNonQuery();
+
+                    commandD.Dispose();
+
+                    // EMAIL
+                    sqla = "INSERT INTO pessoa_email(idpessoa, email, tipo) VALUES (@idpessoa,@email, @tipo)";
+                    commandD = new NpgsqlCommand(sqla, conD);
+
+                    // 
+                    commandD.Parameters.AddWithValue("@idpessoa", Convert.ToInt32(idpessoa));
+                    commandD.Parameters.AddWithValue("@tipo", Convert.ToInt32(0));
+                    commandD.Parameters.AddWithValue("@email", rsO.GetString(rsO.GetOrdinal("email")));
+                    commandD.ExecuteNonQuery();
+
+                    commandD.Parameters.Clear();
+
+                    // email secundario
+                    commandD.Parameters.AddWithValue("@idpessoa", Convert.ToInt32(idpessoa));
+                    commandD.Parameters.AddWithValue("@tipo", Convert.ToInt32(1));
+                    commandD.Parameters.AddWithValue("@email", rsO.GetString(rsO.GetOrdinal("email")));
+                    commandD.ExecuteNonQuery();
+
+                    commandD.Dispose();
+
+
+                    // TELEFONES
+                    sqla = "INSERT INTO pessoa_telefone(idpessoa, telefone, tipo) VALUES (@idpessoa, @telefone, @tipo)";
+                    commandD = new NpgsqlCommand(sqla, conD);
+
+                    // 
+                    commandD.Parameters.AddWithValue("@idpessoa", Convert.ToInt32(idpessoa));
+                    commandD.Parameters.AddWithValue("@telefone", rsO.GetString(rsO.GetOrdinal("foneRes")));
+                    commandD.Parameters.AddWithValue("@tipo", 0);
+                    commandD.ExecuteNonQuery();
+
+                    commandD.Parameters.Clear();
+
+                    // email secundario
+                    commandD.Parameters.AddWithValue("@idpessoa", Convert.ToInt32(idpessoa));
+                    commandD.Parameters.AddWithValue("@telefone", rsO.GetString(rsO.GetOrdinal("foneComer")));
+                    commandD.Parameters.AddWithValue("@tipo", 1);
+                    commandD.ExecuteNonQuery();
+
+                    commandD.Parameters.Clear();
+
+                    commandD.Parameters.AddWithValue("@idpessoa", Convert.ToInt32(idpessoa));
+                    commandD.Parameters.AddWithValue("@telefone", rsO.GetString(rsO.GetOrdinal("foneCel")));
+                    commandD.Parameters.AddWithValue("@tipo", 2);
+                    commandD.ExecuteNonQuery();
+
+                    commandD.Parameters.Clear();
+
+                    commandD.Dispose();
+
+                }
+            }
+            conD.Close();
+            conD.Dispose();
+            conO.Close();
+            conO.Dispose();
+            rsO.Close();
+            commandO.Dispose();
+        }
     }
 }
