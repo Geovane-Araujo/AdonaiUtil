@@ -451,5 +451,45 @@ namespace AdonaiSoft_Utilitario
             rsO.Close();
             commandO.Dispose();
         }
+
+        private void metroLabel14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void metroTextBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void metroButton6_Click(object sender, EventArgs e)
+        {
+            NpgsqlConnection con = new NpgsqlConnection("Host=localhost;Username=postgres;Password=1816;Database=adonai_9999");
+            con.Open();
+
+            try
+            {
+
+                NpgsqlCommand command = new NpgsqlCommand("INSERT INTO notaversao(data,versao,descricao) VALUES(@data,@versao,@descricao)", con);
+
+                command.Parameters.AddWithValue("@data", Convert.ToDateTime(txtDataVersao.Text));
+                command.Parameters.AddWithValue("@versao", txtVersao.Text);
+                command.Parameters.AddWithValue("@Descricao", txtDescricao.Text);
+
+                command.ExecuteReader();
+                command.Dispose();
+                MessageBox.Show("Salvo com sucesso");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+            finally
+            {
+                con.Close();
+                con.Dispose();
+            }
+            
+        }
     }
 }
