@@ -197,32 +197,79 @@ namespace AdonaiSoft_Utilitario.Utilitario
             codigo += "    @PostMapping(" + aspas + "/"+ atributo.ToLower() + aspas + ") \n";
             if(requerToken == true)
             {
-                codigo += "    public ResponseEntity<?> save(@RequestHeader(value = " +aspas+ "Authorization"+aspas+")String token, @RequestBody "+classe+" "+ atributo.ToLower() + ") throws SQLException {\n\n";
-                codigo += "        Object obj = " + atr.ToLower() + ".save(token," + atributo.ToLower()+");\n";
+                codigo += "    public ResponseEntity<?> save(@RequestHeader(value = " +aspas+ "Authorization"+aspas+")String token, @RequestBody "+classe+" "+ atributo.ToLower() + "){\n\n";
+                codigo += "        Object obj = \"\";\n" +
+                          "        Hashtable retorno = new Hashtable();\n" +
+                          "        try {\n" +
+                          "            obj = " + atr.ToLower() + ".save(token," + atributo.ToLower() + ");\n" +
+                          "            retorno.put(\"ret\", \"success\");\n" +
+                          "            retorno.put(\"motivo\", \"OK\");\n" +
+                          "            retorno.put(\"obj\", obj);\n" +
+                          "        }\n" +
+                          "        catch (SQLException e){\n" +
+                          "            retorno.put(\"ret\", \"unsuccess\");\n" +
+                          "            retorno.put(\"motivo\", e.getMessage());\n" +
+                          "        }\n" +
+                          "        return ResponseEntity.ok().body(retorno);";
             }
             else
             {
-                codigo += "    public ResponseEntity<?> save(@RequestBody " + classe + " " + atributo.ToLower() + ") throws SQLException {\n\n";
-                codigo += "        Object obj = " + atr.ToLower() + ".save(" + atributo.ToLower() + ");\n";
+                codigo += "    public ResponseEntity<?> save(@RequestBody " + classe + " " + atributo.ToLower() + ") {\n\n";
+                codigo += "        Object obj = \"\";\n" +
+                          "        Hashtable retorno = new Hashtable();\n" +
+                          "        try {\n" +
+                          "            obj = " + atr.ToLower() + ".save(" + atributo.ToLower() + ");\n" +
+                          "            retorno.put(\"ret\", \"success\");\n" +
+                          "            retorno.put(\"motivo\", \"OK\");\n" +
+                          "            retorno.put(\"obj\", obj);\n" +
+                          "        }\n" +
+                          "        catch (SQLException e){\n" +
+                          "            retorno.put(\"ret\", \"unsuccess\");\n" +
+                          "            retorno.put(\"motivo\", e.getMessage());\n" +
+                          "        }\n" +
+                          "        return ResponseEntity.ok().body(retorno);\n";
             }
-            
-            codigo += "        return ResponseEntity.ok().body(obj);\n\n";
-            codigo += "    }\n\n\n";
+            codigo += "    }\n";
+
+            codigo += "}\n\n\n";
 
             // getbyId
             codigo += "    @GetMapping(" + aspas + "/" + atributo.ToLower() + "/{id}" + aspas + ") \n";
             if(requerToken == true)
             {
                 
-                codigo += "    public ResponseEntity<?> get(@RequestHeader(value = " + aspas + "Authorization" + aspas + ")String token, @PathVariable(value=" + aspas + "id " + aspas + ") int id) throws SQLException {\n\n";
-                codigo += "        Object obj = " + atr.ToLower() + ".getById(token, id);\n";
+                codigo += "    public ResponseEntity<?> get(@RequestHeader(value = " + aspas + "Authorization" + aspas + ")String token, @PathVariable(value=" + aspas + "id" + aspas + ") int id) throws SQLException {\n\n";
+                codigo += "        Object obj = \"\";\n" +
+                          "        Hashtable retorno = new Hashtable();\n" +
+                          "        try {\n" +
+                          "            obj = " + atr.ToLower() + ".getById(token, id);\n" +
+                          "            retorno.put(\"ret\", \"success\");\n" +
+                          "            retorno.put(\"motivo\", \"OK\");\n" +
+                          "            retorno.put(\"obj\", obj);\n" +
+                          "        }\n" +
+                          "        catch (SQLException e){\n" +
+                          "            retorno.put(\"ret\", \"unsuccess\");\n" +
+                          "            retorno.put(\"motivo\", e.getMessage());\n" +
+                          "        }\n" +
+                          "        return ResponseEntity.ok().body(retorno);\n";
             }
             else
             {
                 codigo += "    public ResponseEntity<?> get(@PathVariable(value=" + aspas + "id " + aspas + ") int id) throws SQLException {\n\n";
-                codigo += "        Object obj = " + atr.ToLower() + ".getById(id);\n";
+                codigo += "        Object obj = \"\";\n" +
+                          "        Hashtable retorno = new Hashtable();\n" +
+                          "        try {\n" +
+                          "            obj = " + atr.ToLower() + ".getById(id);\n" +
+                          "            retorno.put(\"ret\", \"success\");\n" +
+                          "            retorno.put(\"motivo\", \"OK\");\n" +
+                          "            retorno.put(\"obj\", obj);\n" +
+                          "        }\n" +
+                          "        catch (SQLException e){\n" +
+                          "            retorno.put(\"ret\", \"unsuccess\");\n" +
+                          "            retorno.put(\"motivo\", e.getMessage());\n" +
+                          "        }\n" +
+                          "        return ResponseEntity.ok().body(retorno);\n";
             }
-            codigo += "        return ResponseEntity.ok().body(obj);\n\n";
             codigo += "    }\n";
 
             codigo += "}\n\n\n";
@@ -275,9 +322,8 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 codigo += "        ResultSet rs = null;\n\n";
                 codigo += "        Hashtable retorno = new Hashtable();\n\n";
                 codigo += "        int scalar = 0;\n\n";
-                codigo += "        try{\n\n";
-                codigo += "            String decode = UtilToken.decode(token);\n";
-                codigo += "            con = connection.Conexao(decode);\n\n";
+                codigo += "        String decode = UtilToken.decode(token);\n";
+                codigo += "        con = connection.Conexao(decode);\n\n";
             }
             else
             {
@@ -288,16 +334,15 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 codigo += "        ResultSet rs = null;\n\n";
                 codigo += "        Hashtable retorno = new Hashtable();\n\n";
                 codigo += "        int scalar = 0;\n\n";
-                codigo += "        try{\n\n";
-                codigo += "            con = connection.Conexao("+aspas+dbTokenTalse+aspas+");\n\n";
+                codigo += "        con = connection.Conexao("+aspas+dbTokenTalse+aspas+");\n\n";
             }
             // save
             
 
-            codigo += "            con.setAutoCommit(false);\n\n";
+            codigo += "        con.setAutoCommit(false);\n\n";
 
             // add
-            codigo += "            if(" + atributo.ToLower() + ".isAdd()){\n\n";
+            codigo += "        if(" + atributo.ToLower() + ".isAdd()){\n\n";
 
             String values = "";
             for(int i = 1;i < coluna.Length; i++)
@@ -306,8 +351,8 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 values += "?,";
             }
 
-            codigo += "                sql = " +aspas+"INSERT INTO "+tabela+"("+ sql.Substring(0,sql.Length - 1)+") VALUES("+ values.Substring(0,values.Length -1 )+");" + aspas+";\n\n";
-            codigo += "                stmt = con.prepareStatement(sql);\n\n";
+            codigo += "            sql = " + aspas+"INSERT INTO "+tabela+"("+ sql.Substring(0,sql.Length - 1)+") VALUES("+ values.Substring(0,values.Length -1 )+");" + aspas+";\n\n";
+            codigo += "            stmt = con.prepareStatement(sql);\n\n";
             int a = 1;
             for (int i = 1; i < coluna.Length; i++)
             {
@@ -356,16 +401,16 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 column = char.ToUpper(aux[0]) + aux.Substring(1);
                
                 
-                codigo +=  "                "+tipoatributo+ +a+", " + atributo.ToLower() + ".get"+ column + "());\n";
+                codigo +=  "            "+tipoatributo+ +a+", " + atributo.ToLower() + ".get"+ column + "());\n";
                 a = a + 1;
             }
-            codigo += "                \n\n";
-            codigo += "                log = " +aspas+"Adicionaou"+aspas+";\n";
-            codigo += "            }\n";
+            codigo += "            \n\n";
+            codigo += "            log = " +aspas+"Adicionaou"+aspas+";\n";
+            codigo += "        }\n";
 
 
             // edit
-            codigo += "            else if(" + atributo.ToLower() + ".isEdit()){\n\n";
+            codigo += "        else if(" + atributo.ToLower() + ".isEdit()){\n\n";
 
             sql = "";
             for (int i = 1; i < coluna.Length; i++)
@@ -375,9 +420,9 @@ namespace AdonaiSoft_Utilitario.Utilitario
 
             
 
-            codigo += "                sql = " + aspas + "UPDATE " + tabela + " SET " + sql.Substring(0,sql.Length - 1) + " WHERE id = ?" + aspas + ";\n\n";
-            codigo += "                stmt = con.prepareStatement(sql);\n\n";
-            a = 1;
+            codigo += "            sql = " + aspas + "UPDATE " + tabela + " SET " + sql.Substring(0,sql.Length - 1) + " WHERE id = ?" + aspas + ";\n\n";
+            codigo += "            stmt = con.prepareStatement(sql);\n\n";
+            a = coluna.Length;
             for (int i = (coluna.Length - 1); i > 0; i--)
             {
                 if (tipo[i].Equals("integer"))
@@ -425,46 +470,33 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 column = char.ToUpper(aux[0]) + aux.Substring(1);
 
 
-                codigo = codigo + "                " + tipoatributo + a + ", " + atributo.ToLower() + ".get" + column + "());\n";
-                a = a + 1;
+                codigo = codigo + "            " + tipoatributo + a + ", " + atributo.ToLower() + ".get" + column + "());\n";
+                a = a - 1;
             }
-            codigo += "                stmt.setInt(" + a + ", " + atributo.ToLower() + ".getId());\n";
+            codigo += "            stmt.setInt(" + a + ", " + atributo.ToLower() + ".getId());\n";
 
-            codigo += "                \n\n";
-            codigo += "                log = " + aspas + "Editou" + aspas + ";\n";
-            codigo += "            }\n";
+            codigo += "            \n\n";
+            codigo += "            log = " + aspas + "Editou" + aspas + ";\n";
+            codigo += "        }\n";
 
 
             // del
-            codigo += "            else if(" + atributo.ToLower() + ".isDel()){\n\n";
+            codigo += "        else if(" + atributo.ToLower() + ".isDel()){\n\n";
 
             aux = coluna[0];
             column = char.ToLower(aux[0]) + aux.Substring(1);
 
-            codigo += "                sql = " + aspas + "DELETE FROM " + tabela + " WHERE id = "+aspas+"+"+ atributo.ToLower() + ".getId();\n\n";
-            codigo += "                stmt = con.prepareStatement(sql);\n\n";
+            codigo += "            sql = " + aspas + "DELETE FROM " + tabela + " WHERE id = "+aspas+"+"+ atributo.ToLower() + ".getId();\n\n";
+            codigo += "            stmt = con.prepareStatement(sql);\n\n";
 
-            codigo += "                log = " + aspas + "Apagou" + aspas + ";\n\n";
-            codigo += "            }\n\n";
-
-            codigo += "            stmt.execute();\n";
-            codigo += "            con.commit();\n";
-
-            codigo += "            retorno.put(" +aspas+"ret"+aspas+", "+aspas+"success"+aspas+");\n";
-            codigo += "            retorno.put(" + aspas + "motivo" + aspas + ", " + aspas + "OK" + aspas + ");\n";
-            codigo += "            retorno.put(" + aspas + "obj" + aspas + ", " + atributo.ToLower() + ");\n";
-
-
-            codigo += "        }\n";
-            codigo += "        catch(SQLException e) {\n\n";
-            codigo += "            retorno.put(" + aspas + "ret" + aspas + ", " + aspas + "unsuccess" + aspas + ");\n";
-            codigo += "            retorno.put(" + aspas + "motivo" + aspas + ", e.getMessage());\n";
-            codigo += "        }\n";
-            codigo += "        finally {\n";
-            codigo += "            con.close();\n";
-            codigo += "            stmt.close();\n";
+            codigo += "            log = " + aspas + "Apagou" + aspas + ";\n\n";
             codigo += "        }\n\n";
-            codigo += "        return retorno;\n";
+
+            codigo += "        stmt.execute();\n";
+            codigo += "        con.commit();\n";
+            codigo += "        con.close();\n";
+            codigo += "        stmt.close();\n";
+            codigo += "        return " + atributo.ToLower() + ";\n";
             codigo += "    }\n";
 
 
@@ -479,10 +511,9 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 codigo += "        ResultSet rs = null;\n";
                 codigo += "        Hashtable retorno = new Hashtable();\n\n";
 
-                codigo += "        try{\n\n";
 
-                codigo += "            String decode = UtilToken.decode(token);\n";
-                codigo += "            con = connection.Conexao(decode);\n";
+                codigo += "        String decode = UtilToken.decode(token);\n";
+                codigo += "        con = connection.Conexao(decode);\n";
             }
             else
             {
@@ -495,9 +526,7 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 codigo += "        ResultSet rs = null;\n";
                 codigo += "        Hashtable retorno = new Hashtable();\n\n";
 
-                codigo += "        try{\n\n";
-
-                codigo += "            con = connection.Conexao(" + aspas + dbTokenTalse + aspas + ");\n\n";
+                codigo += "        con = connection.Conexao(" + aspas + dbTokenTalse + aspas + ");\n\n";
             }
             
             codigo += "            stmt = con.prepareStatement(sql);\n";
@@ -508,22 +537,12 @@ namespace AdonaiSoft_Utilitario.Utilitario
 
             codigo += "            }\n";
 
-            codigo += "            retorno.put(" + aspas + "ret" + aspas + ", " + aspas + "success" + aspas + ");\n";
-            codigo += "            retorno.put(" + aspas + "motivo" + aspas + ", " + aspas + "OK" + aspas + ");\n";
-            codigo += "            //retorno.put(" + aspas + "obj" + aspas + ", " + atributo.ToLower() + ");\n";
 
 
-            codigo += "        }\n";
-            codigo += "        catch(SQLException e) {\n\n";
-            codigo += "            retorno.put(" + aspas + "ret" + aspas + ", " + aspas + "unsuccess" + aspas + ");\n";
-            codigo += "            retorno.put(" + aspas + "motivo" + aspas + ", e.getMessage());\n\n";
-            codigo += "        }\n";
-            codigo += "        finally {\n";
-            codigo += "            con.close();\n";
-            codigo += "            rs.close();\n";
-            codigo += "            stmt.close();\n";
-            codigo += "        }\n\n";
-            codigo += "        return retorno;\n";
+            codigo += "        con.close();\n";
+            codigo += "        rs.close();\n";
+            codigo += "        stmt.close();\n";
+            codigo += "        return " + atributo.ToLower() + ";\n";
             codigo += "    }\n";
 
 

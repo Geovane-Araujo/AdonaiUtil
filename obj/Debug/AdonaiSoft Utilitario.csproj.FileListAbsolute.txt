@@ -44,3 +44,13 @@ E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csproj
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.exe
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.pdb
 E:\Adonai Workspace\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csprojAssemblyReference.cache
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\MercadoPago.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\Newtonsoft.Json.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\nunit.framework.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\ObjectDumper.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\RestSharp.dll
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\MercadoPago.pdb
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\Newtonsoft.Json.xml
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\nunit.framework.pdb
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\nunit.framework.xml
+E:\Adonai Workspace\AdonaiSoft Utilitario\bin\Debug\RestSharp.xml
