@@ -17,6 +17,7 @@ namespace AdonaiSoft_Utilitario
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -220,7 +221,7 @@ namespace AdonaiSoft_Utilitario
                                 
                             }
 
-                            String model = Util.Controller(coluna, tipo, txtPakage.Text, txtClasse.Text, txtTabela.Text, fk, fktableref, cheToken.Checked, txtdbRequerTokenFalse.Text);
+                            String model = Util.Controller(coluna, tipo, txtPakage.Text, txtClasse.Text, txtTabela.Text, fk, fktableref, cheToken.Checked, txtDataBase.Text);
                             Form4 txtmodel = new Form4(model);
                             txtmodel.Show();
                         }
@@ -703,6 +704,11 @@ namespace AdonaiSoft_Utilitario
         }
 
         private void txtPakage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void metroLabel18_Click(object sender, EventArgs e)
         {
 
         }
