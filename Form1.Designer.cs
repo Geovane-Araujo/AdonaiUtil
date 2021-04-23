@@ -40,6 +40,13 @@
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.baseOriginal = new MetroFramework.Controls.MetroTextBox();
             this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
+            this.metroCheckBox3 = new MetroFramework.Controls.MetroCheckBox();
+            this.chepain = new MetroFramework.Controls.MetroCheckBox();
+            this.checlassico = new MetroFramework.Controls.MetroCheckBox();
+            this.metroLabel19 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel13 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel18 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel17 = new MetroFramework.Controls.MetroLabel();
             this.cheToken = new MetroFramework.Controls.MetroCheckBox();
             this.metroLabel12 = new MetroFramework.Controls.MetroLabel();
             this.txtendpoint = new MetroFramework.Controls.MetroTextBox();
@@ -78,13 +85,6 @@
             this.txtDataVersao = new MetroFramework.Controls.MetroDateTime();
             this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
             this.metroButton7 = new MetroFramework.Controls.MetroButton();
-            this.metroLabel17 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel18 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel13 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel19 = new MetroFramework.Controls.MetroLabel();
-            this.metroCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
-            this.metroCheckBox2 = new MetroFramework.Controls.MetroCheckBox();
-            this.metroCheckBox3 = new MetroFramework.Controls.MetroCheckBox();
             this.metroTabControl1.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
             this.metroTabPage2.SuspendLayout();
@@ -136,7 +136,8 @@
             this.cmbLocalDestino.FormattingEnabled = true;
             this.cmbLocalDestino.ItemHeight = 23;
             this.cmbLocalDestino.Items.AddRange(new object[] {
-            "localhost"});
+            "localhost",
+            "209.126.83.69"});
             this.cmbLocalDestino.Location = new System.Drawing.Point(4, 54);
             this.cmbLocalDestino.Name = "cmbLocalDestino";
             this.cmbLocalDestino.Size = new System.Drawing.Size(343, 29);
@@ -232,8 +233,8 @@
             // metroTabPage2
             // 
             this.metroTabPage2.Controls.Add(this.metroCheckBox3);
-            this.metroTabPage2.Controls.Add(this.metroCheckBox2);
-            this.metroTabPage2.Controls.Add(this.metroCheckBox1);
+            this.metroTabPage2.Controls.Add(this.chepain);
+            this.metroTabPage2.Controls.Add(this.checlassico);
             this.metroTabPage2.Controls.Add(this.metroLabel19);
             this.metroTabPage2.Controls.Add(this.metroLabel13);
             this.metroTabPage2.Controls.Add(this.metroLabel18);
@@ -272,6 +273,85 @@
             this.metroTabPage2.VerticalScrollbarBarColor = true;
             this.metroTabPage2.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage2.VerticalScrollbarSize = 10;
+            // 
+            // metroCheckBox3
+            // 
+            this.metroCheckBox3.AutoSize = true;
+            this.metroCheckBox3.Location = new System.Drawing.Point(1, 359);
+            this.metroCheckBox3.Name = "metroCheckBox3";
+            this.metroCheckBox3.Size = new System.Drawing.Size(75, 15);
+            this.metroCheckBox3.TabIndex = 34;
+            this.metroCheckBox3.Text = "Hibernate";
+            this.metroCheckBox3.UseSelectable = true;
+            // 
+            // chepain
+            // 
+            this.chepain.AutoSize = true;
+            this.chepain.Location = new System.Drawing.Point(1, 337);
+            this.chepain.Name = "chepain";
+            this.chepain.Size = new System.Drawing.Size(75, 15);
+            this.chepain.TabIndex = 33;
+            this.chepain.Text = "Pain-crud";
+            this.chepain.UseSelectable = true;
+            // 
+            // checlassico
+            // 
+            this.checlassico.AutoSize = true;
+            this.checlassico.Location = new System.Drawing.Point(1, 316);
+            this.checlassico.Name = "checlassico";
+            this.checlassico.Size = new System.Drawing.Size(66, 15);
+            this.checlassico.TabIndex = 32;
+            this.checlassico.Text = "Clássico";
+            this.checlassico.UseSelectable = true;
+            // 
+            // metroLabel19
+            // 
+            this.metroLabel19.AutoSize = true;
+            this.metroLabel19.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.metroLabel19.Location = new System.Drawing.Point(2, 278);
+            this.metroLabel19.Name = "metroLabel19";
+            this.metroLabel19.Size = new System.Drawing.Size(77, 25);
+            this.metroLabel19.Style = MetroFramework.MetroColorStyle.Red;
+            this.metroLabel19.TabIndex = 31;
+            this.metroLabel19.Text = "Modelos";
+            // 
+            // metroLabel13
+            // 
+            this.metroLabel13.AutoSize = true;
+            this.metroLabel13.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.metroLabel13.Location = new System.Drawing.Point(147, 278);
+            this.metroLabel13.Name = "metroLabel13";
+            this.metroLabel13.Size = new System.Drawing.Size(77, 25);
+            this.metroLabel13.Style = MetroFramework.MetroColorStyle.Red;
+            this.metroLabel13.TabIndex = 30;
+            this.metroLabel13.Text = "Detalhes";
+            // 
+            // metroLabel18
+            // 
+            this.metroLabel18.AutoSize = true;
+            this.metroLabel18.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.metroLabel18.Location = new System.Drawing.Point(661, 10);
+            this.metroLabel18.Name = "metroLabel18";
+            this.metroLabel18.Size = new System.Drawing.Size(192, 25);
+            this.metroLabel18.Style = MetroFramework.MetroColorStyle.Red;
+            this.metroLabel18.TabIndex = 29;
+            this.metroLabel18.Text = "Propriedades do Pacote";
+            this.metroLabel18.Click += new System.EventHandler(this.metroLabel18_Click);
+            // 
+            // metroLabel17
+            // 
+            this.metroLabel17.AutoSize = true;
+            this.metroLabel17.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.metroLabel17.Location = new System.Drawing.Point(2, 10);
+            this.metroLabel17.Name = "metroLabel17";
+            this.metroLabel17.Size = new System.Drawing.Size(79, 25);
+            this.metroLabel17.Style = MetroFramework.MetroColorStyle.Red;
+            this.metroLabel17.TabIndex = 28;
+            this.metroLabel17.Text = "Conexão";
             // 
             // cheToken
             // 
@@ -772,7 +852,7 @@
             // 
             // metroButton6
             // 
-            this.metroButton6.Location = new System.Drawing.Point(645, 383);
+            this.metroButton6.Location = new System.Drawing.Point(777, 389);
             this.metroButton6.Name = "metroButton6";
             this.metroButton6.Size = new System.Drawing.Size(93, 23);
             this.metroButton6.TabIndex = 10;
@@ -783,7 +863,7 @@
             // metroLabel16
             // 
             this.metroLabel16.AutoSize = true;
-            this.metroLabel16.Location = new System.Drawing.Point(403, 18);
+            this.metroLabel16.Location = new System.Drawing.Point(189, 18);
             this.metroLabel16.Name = "metroLabel16";
             this.metroLabel16.Size = new System.Drawing.Size(48, 19);
             this.metroLabel16.TabIndex = 9;
@@ -806,7 +886,7 @@
             this.txtVersao.CustomButton.Visible = false;
             this.txtVersao.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.txtVersao.Lines = new string[0];
-            this.txtVersao.Location = new System.Drawing.Point(403, 40);
+            this.txtVersao.Location = new System.Drawing.Point(189, 40);
             this.txtVersao.MaxLength = 32767;
             this.txtVersao.Name = "txtVersao";
             this.txtVersao.PasswordChar = '\0';
@@ -848,7 +928,7 @@
             this.txtDescricao.ForeColor = System.Drawing.SystemColors.MenuText;
             this.txtDescricao.Location = new System.Drawing.Point(11, 104);
             this.txtDescricao.Name = "txtDescricao";
-            this.txtDescricao.Size = new System.Drawing.Size(727, 273);
+            this.txtDescricao.Size = new System.Drawing.Size(859, 273);
             this.txtDescricao.TabIndex = 3;
             this.txtDescricao.Text = "";
             // 
@@ -856,7 +936,7 @@
             // 
             this.txtDataVersao.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.txtDataVersao.Location = new System.Drawing.Point(11, 40);
-            this.txtDataVersao.MinimumSize = new System.Drawing.Size(0, 29);
+            this.txtDataVersao.MinimumSize = new System.Drawing.Size(4, 29);
             this.txtDataVersao.Name = "txtDataVersao";
             this.txtDataVersao.Size = new System.Drawing.Size(125, 29);
             this.txtDataVersao.TabIndex = 2;
@@ -886,85 +966,6 @@
             this.metroButton7.Text = "Pau";
             this.metroButton7.UseSelectable = true;
             this.metroButton7.Click += new System.EventHandler(this.metroButton7_Click);
-            // 
-            // metroLabel17
-            // 
-            this.metroLabel17.AutoSize = true;
-            this.metroLabel17.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.metroLabel17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.metroLabel17.Location = new System.Drawing.Point(2, 10);
-            this.metroLabel17.Name = "metroLabel17";
-            this.metroLabel17.Size = new System.Drawing.Size(79, 25);
-            this.metroLabel17.Style = MetroFramework.MetroColorStyle.Red;
-            this.metroLabel17.TabIndex = 28;
-            this.metroLabel17.Text = "Conexão";
-            // 
-            // metroLabel18
-            // 
-            this.metroLabel18.AutoSize = true;
-            this.metroLabel18.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.metroLabel18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.metroLabel18.Location = new System.Drawing.Point(661, 10);
-            this.metroLabel18.Name = "metroLabel18";
-            this.metroLabel18.Size = new System.Drawing.Size(192, 25);
-            this.metroLabel18.Style = MetroFramework.MetroColorStyle.Red;
-            this.metroLabel18.TabIndex = 29;
-            this.metroLabel18.Text = "Propriedades do Pacote";
-            this.metroLabel18.Click += new System.EventHandler(this.metroLabel18_Click);
-            // 
-            // metroLabel13
-            // 
-            this.metroLabel13.AutoSize = true;
-            this.metroLabel13.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.metroLabel13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.metroLabel13.Location = new System.Drawing.Point(147, 278);
-            this.metroLabel13.Name = "metroLabel13";
-            this.metroLabel13.Size = new System.Drawing.Size(77, 25);
-            this.metroLabel13.Style = MetroFramework.MetroColorStyle.Red;
-            this.metroLabel13.TabIndex = 30;
-            this.metroLabel13.Text = "Detalhes";
-            // 
-            // metroLabel19
-            // 
-            this.metroLabel19.AutoSize = true;
-            this.metroLabel19.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.metroLabel19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.metroLabel19.Location = new System.Drawing.Point(2, 278);
-            this.metroLabel19.Name = "metroLabel19";
-            this.metroLabel19.Size = new System.Drawing.Size(77, 25);
-            this.metroLabel19.Style = MetroFramework.MetroColorStyle.Red;
-            this.metroLabel19.TabIndex = 31;
-            this.metroLabel19.Text = "Modelos";
-            // 
-            // metroCheckBox1
-            // 
-            this.metroCheckBox1.AutoSize = true;
-            this.metroCheckBox1.Location = new System.Drawing.Point(1, 316);
-            this.metroCheckBox1.Name = "metroCheckBox1";
-            this.metroCheckBox1.Size = new System.Drawing.Size(66, 15);
-            this.metroCheckBox1.TabIndex = 32;
-            this.metroCheckBox1.Text = "Clássico";
-            this.metroCheckBox1.UseSelectable = true;
-            // 
-            // metroCheckBox2
-            // 
-            this.metroCheckBox2.AutoSize = true;
-            this.metroCheckBox2.Location = new System.Drawing.Point(1, 337);
-            this.metroCheckBox2.Name = "metroCheckBox2";
-            this.metroCheckBox2.Size = new System.Drawing.Size(75, 15);
-            this.metroCheckBox2.TabIndex = 33;
-            this.metroCheckBox2.Text = "Pain-crud";
-            this.metroCheckBox2.UseSelectable = true;
-            // 
-            // metroCheckBox3
-            // 
-            this.metroCheckBox3.AutoSize = true;
-            this.metroCheckBox3.Location = new System.Drawing.Point(1, 359);
-            this.metroCheckBox3.Name = "metroCheckBox3";
-            this.metroCheckBox3.Size = new System.Drawing.Size(75, 15);
-            this.metroCheckBox3.TabIndex = 34;
-            this.metroCheckBox3.Text = "Hibernate";
-            this.metroCheckBox3.UseSelectable = true;
             // 
             // Form1
             // 
@@ -1047,8 +1048,8 @@
         private MetroFramework.Controls.MetroLabel metroLabel18;
         private MetroFramework.Controls.MetroLabel metroLabel13;
         private MetroFramework.Controls.MetroCheckBox metroCheckBox3;
-        private MetroFramework.Controls.MetroCheckBox metroCheckBox2;
-        private MetroFramework.Controls.MetroCheckBox metroCheckBox1;
+        private MetroFramework.Controls.MetroCheckBox chepain;
+        private MetroFramework.Controls.MetroCheckBox checlassico;
         private MetroFramework.Controls.MetroLabel metroLabel19;
     }
 }

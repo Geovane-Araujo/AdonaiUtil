@@ -95,7 +95,8 @@ namespace AdonaiSoft_Utilitario
 
         private void metroButton3_Click(object sender, EventArgs e)
         {
-            if(cmbBanco.Text == "PostgreSql")
+            String model = "";
+            if (cmbBanco.Text == "PostgreSql")
             {
                 try
                 {
@@ -142,19 +143,35 @@ namespace AdonaiSoft_Utilitario
                             i = i + 1;
                             
                         }
-                        if(cheModel.Checked)
+                        if(cheModel.Checked)// Aqui .é o model
                         {
-                            String model = Util.Model(coluna, tipo, txtPakage.Text, txtClasse.Text);
+                            if (checlassico.Checked)
+                            {
+                                model = Util.Model(coluna, tipo, txtPakage.Text, txtClasse.Text);
+                            }
+                            else if (chepain.Checked)
+                            {
+                                model = Util.ModelPain(coluna, tipo, txtPakage.Text, txtClasse.Text);
+                            }
+                            
                             Form2 txtmodel = new Form2(model);
                             txtmodel.Show();
                         }
-                        if (cheResource.Checked)
+                        if (cheResource.Checked)// Aqui .é o Resource
                         {
-                            String model = Util.Resource(coluna, tipo, txtPakage.Text, txtClasse.Text, txtendpoint.Text,cheToken.Checked);
+                            if (checlassico.Checked)
+                            {
+                                model = Util.Resource(coluna, tipo, txtPakage.Text, txtClasse.Text, txtendpoint.Text, cheToken.Checked);
+                            }
+                            else if (chepain.Checked)
+                            {
+                                model = Util.ResourceCrud(txtPakage.Text, txtClasse.Text);
+                            }
+                            
                             Form3 txtmodel = new Form3(model);
                             txtmodel.Show();
                         }
-                        if (cheController.Checked)
+                        if (cheController.Checked) // Aqui é o controller, no caso do pain-crud aqui irá mudar
                         {
                             String sqla = "SELECT COUNT(kcu.column_name) as p "+
                                 " FROM  information_schema.table_constraints AS tc "+
@@ -221,7 +238,16 @@ namespace AdonaiSoft_Utilitario
                                 
                             }
 
-                            String model = Util.Controller(coluna, tipo, txtPakage.Text, txtClasse.Text, txtTabela.Text, fk, fktableref, cheToken.Checked, txtDataBase.Text);
+                            if (checlassico.Checked)
+                            {
+                                model = Util.Controller(coluna, tipo, txtPakage.Text, txtClasse.Text, txtTabela.Text, fk, fktableref, cheToken.Checked, txtDataBase.Text);
+                            }
+                            else if (chepain.Checked)
+                            {
+                                model = Util.ControllerCrud(txtClasse.Text);
+                            }
+
+                            
                             Form4 txtmodel = new Form4(model);
                             txtmodel.Show();
                         }
@@ -465,7 +491,7 @@ namespace AdonaiSoft_Utilitario
 
         private void metroButton6_Click(object sender, EventArgs e)
         {
-            NpgsqlConnection con = new NpgsqlConnection("Host=localhost;Username=postgres;Password=1816;Database=adonai_9999");
+            NpgsqlConnection con = new NpgsqlConnection("Host="+cmbLocalDestino.Text+";Username=postgres;Password=1816;Database=adonai_9999");
             con.Open();
 
             try
