@@ -39,6 +39,7 @@
             this.txtCodigo.Size = new System.Drawing.Size(631, 370);
             this.txtCodigo.TabIndex = 0;
             this.txtCodigo.Text = "";
+            this.txtCodigo.TextChanged += new System.EventHandler(this.txtCodigo_TextChanged);
             // 
             // Form2
             // 

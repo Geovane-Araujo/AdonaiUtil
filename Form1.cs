@@ -14,6 +14,11 @@ namespace AdonaiSoft_Utilitario
 {
     public partial class Form1 : MetroFramework.Forms.MetroForm
     {
+        public static String dbName = "";
+        public static String tableName = "";
+        public static String endpointName = "";
+        public static Boolean util;
+        public static Boolean rest;
         public Form1()
         {
             InitializeComponent();
@@ -27,7 +32,7 @@ namespace AdonaiSoft_Utilitario
 
         private void metroButton1_Click(object sender, EventArgs e)
         {
-            NpgsqlConnection conO = new NpgsqlConnection("Host=" + cmbLocalDestino.Text + ";Username=postgres;Password=1816;Database=adonai_9999");
+            NpgsqlConnection conO = new NpgsqlConnection("Host=" + txtLocalBanco.Text + ";Username=postgres;Password=1816;Database=adonai_9999");
             conO.Open();
 
             String sql = "select IDPessoa from Pessoa_igreja";
@@ -40,7 +45,7 @@ namespace AdonaiSoft_Utilitario
                     while (rs.Read())
                     {
 
-                        NpgsqlConnection conD = new NpgsqlConnection("Host=" + cmbLocalDestino.Text + ";Username=postgres;Password=1816;Database=adonai_" + Convert.ToString(rs.GetInt32(rs.GetOrdinal("IDPessoa"))));
+                        NpgsqlConnection conD = new NpgsqlConnection("Host=" + txtLocalBanco.Text + ";Username=postgres;Password=1816;Database=adonai_" + Convert.ToString(rs.GetInt32(rs.GetOrdinal("IDPessoa"))));
                         conD.Open();
 
                         NpgsqlCommand commandD = new NpgsqlCommand(comandosql.Text, conD);
@@ -71,7 +76,7 @@ namespace AdonaiSoft_Utilitario
 
         private void metroButton2_Click(object sender, EventArgs e)
         {
-            NpgsqlConnection conO = new NpgsqlConnection("Host=" + cmbLocalDestino.Text + ";Username=postgres;Password=1816;Database=" + baseOriginal.Text);
+            NpgsqlConnection conO = new NpgsqlConnection("Host=" + txtLocalBanco.Text + ";Username=postgres;Password=1816;Database=" + baseOriginal.Text);
             conO.Open();
 
             try
@@ -96,6 +101,11 @@ namespace AdonaiSoft_Utilitario
         private void metroButton3_Click(object sender, EventArgs e)
         {
             String model = "";
+            dbName = txtDataBase.Text;
+            tableName = txtTabela.Text;
+            endpointName = txtendpoint.Text;
+            util = cheUtil.Checked;
+            rest = cheRest.Checked;
             if (cmbBanco.Text == "PostgreSql")
             {
                 try
@@ -147,7 +157,7 @@ namespace AdonaiSoft_Utilitario
                         {
                             if (checlassico.Checked)
                             {
-                                model = Util.Model(coluna, tipo, txtPakage.Text, txtClasse.Text);
+                                model = Util.Model(coluna, tipo, txtPakage.Text, txtClasse.Text,txtConexao.Text);
                             }
                             else if (chepain.Checked)
                             {
@@ -161,11 +171,11 @@ namespace AdonaiSoft_Utilitario
                         {
                             if (checlassico.Checked)
                             {
-                                model = Util.Resource(coluna, tipo, txtPakage.Text, txtClasse.Text, txtendpoint.Text, cheToken.Checked);
+                                model = Util.Resource(coluna, tipo, txtPakage.Text, txtClasse.Text, txtendpoint.Text, cheToken.Checked, txtConexao.Text);
                             }
                             else if (chepain.Checked)
                             {
-                                model = Util.ResourceCrud(txtPakage.Text, txtClasse.Text);
+                                model = Util.ResourceCrud(txtPakage.Text, txtClasse.Text, cheToken.Checked);
                             }
                             
                             Form3 txtmodel = new Form3(model);
@@ -240,11 +250,11 @@ namespace AdonaiSoft_Utilitario
 
                             if (checlassico.Checked)
                             {
-                                model = Util.Controller(coluna, tipo, txtPakage.Text, txtClasse.Text, txtTabela.Text, fk, fktableref, cheToken.Checked, txtDataBase.Text);
+                                model = Util.Controller(coluna, tipo, txtPakage.Text, txtClasse.Text, txtTabela.Text, fk, fktableref, cheToken.Checked, txtDataBase.Text, txtConexao.Text);
                             }
                             else if (chepain.Checked)
                             {
-                                model = Util.ControllerCrud(txtClasse.Text);
+                                model = Util.ControllerCrud(txtClasse.Text, txtConexao.Text, cheToken.Checked);
                             }
 
                             
@@ -491,7 +501,7 @@ namespace AdonaiSoft_Utilitario
 
         private void metroButton6_Click(object sender, EventArgs e)
         {
-            NpgsqlConnection con = new NpgsqlConnection("Host="+cmbLocalDestino.Text+";Username=postgres;Password=1816;Database=adonai_9999");
+            NpgsqlConnection con = new NpgsqlConnection("Host="+ txtLocalBanco.Text+";Username=postgres;Password=1816;Database=adonai_9999");
             con.Open();
 
             try
@@ -517,11 +527,6 @@ namespace AdonaiSoft_Utilitario
                 con.Dispose();
             }
             
-        }
-
-        private void metroButton7_Click(object sender, EventArgs e)
-        {
-            //MercadoPago.SDK.setAccessToken = "APP_USR-3416359311987982-100200-91298f74e55ce4e9b9f535947815657f-394686198";
         }
 
         private void txtDataVersao_ValueChanged(object sender, EventArgs e)
@@ -737,6 +742,125 @@ namespace AdonaiSoft_Utilitario
         private void metroLabel18_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void metroLabel3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void metroButton9_Click(object sender, EventArgs e)
+        {
+            string conexao = "";
+            if(cmbBanco.Text.Equals("PostgreSql"))
+            {
+                conexao = "\tprivate String url = \"jdbc:postgresql://localhost:5432/\";\n" +
+                        "\n" +
+                        "\tpublic String getUrl() {\n" +
+                        "\t\treturn url;\n" +
+                        "\t}\n" +
+                        "\n" +
+                        "\tpublic boolean openSessionConnections(String db) throws ClassNotFoundException {\n" +
+                        "\n" +
+                        "\t\tboolean ret;\n" +
+                        "\n" +
+                        "\t\ttry {\n" +
+                        "\t\t\tString url = getUrl()+db;\n" +
+                        "\t\t\tClass.forName(\"org.postgresql.Driver\");\n" +
+                        "\t\t\tString senha = \"1816\";\n" +
+                        "\t\t\tDriverManager.getConnection(url, \"postgres\", senha);\n" +
+                        "\t\t\tret = true;\n" +
+                        "\t\t} catch (SQLException e) {\n" +
+                        "\t\t\tret = false;\n" +
+                        "\t\t\tSystem.out.println(e);\n" +
+                        "\n" +
+                        "\t\t}\n" +
+                        "\n" +
+                        "\t\treturn ret;\n" +
+                        "\t}\n" +
+                        "\n" +
+                        "\tpublic Connection getNewConnections(String db) throws SQLException {\n" +
+                        "\n" +
+                        "\t\tConnection con = null;\n" +
+                        "\t\tString url = getUrl()+db;\n" +
+                        "\t\ttry {\n" +
+                        "\t\t\tString senha = \"1816\";\n" +
+                        "\t\t\tcon = DriverManager.getConnection(url,\"postgres\",senha);\n" +
+                        "\t\t}\n" +
+                        "\t\tcatch(SQLException e) {\n" +
+                        "\t\t\tSystem.out.println(e);\n" +
+                        "\n" +
+                        "\t\t}\n" +
+                        "\t\treturn con;\n" +
+                        "\t}";
+            }
+
+            FormUteis txtmodel = new FormUteis(conexao);
+            txtmodel.Show();
+
+        }
+
+        private void metroButton10_Click(object sender, EventArgs e)
+        {
+            String util = "public class UtilToken {\n" +
+                "\n" +
+                "    private String criterios;\n" +
+                "\n" +
+                "    private int pagina;\n" +
+                "\n" +
+                "    private String route;\n" +
+                "\n" +
+                "    public String getRoute() {\n" +
+                "        return route;\n" +
+                "    }\n" +
+                "\n" +
+                "    public void setRoute(String route) {\n" +
+                "        this.route = route;\n" +
+                "    }\n" +
+                "\n" +
+                "    public int getPagina() {\n" +
+                "        return pagina;\n" +
+                "    }\n" +
+                "\n" +
+                "    public void setPagina(int pagina) {\n" +
+                "        this.pagina = pagina;\n" +
+                "    }\n" +
+                "\n" +
+                "    public String getCriterios() {\n" +
+                "        return criterios;\n" +
+                "    }\n" +
+                "\n" +
+                "    public void setCriterios(String criterios) {\n" +
+                "        this.criterios = criterios;\n" +
+                "    }\n" +
+                "\n" +
+                "    public static String decode(String token){\n" +
+                "\n" +
+                "        String[] tk = token.split(\" \");\n" +
+                "        String decode = Base64.base64Decode(tk[1]);\n" +
+                "        decode = decode.substring(0,4);\n" +
+                "        String[] a = decode.split(\"&\");\n" +
+                "        return a[0];\n" +
+                "    }\n" +
+                "\n" +
+                "    public static int decodeId(String token){\n" +
+                "\n" +
+                "        String[] tk = token.split(\" \");\n" +
+                "        String decode = Base64.base64Decode(tk[1]);\n" +
+                "        String[] id = decode.split(\"&\");\n" +
+                "\n" +
+                "        return Integer.parseInt(id[1]);\n" +
+                "    }\n" +
+                "\n" +
+                "    public static String[] decodeUsersApp(String token){\n" +
+                "\n" +
+                "        String decode = Base64.base64Decode(token);\n" +
+                "        String[] tk = decode.split(\"&\");\n" +
+                "        return tk;\n" +
+                "    }\n" +
+                "}";
+            FormUteis txtmodel = new FormUteis(util);
+            txtmodel.Show();
         }
     }
 }

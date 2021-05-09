@@ -3,30 +3,23 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AdonaiSoft_Utilitario
 {
-    public partial class Form2 : MetroFramework.Forms.MetroForm
+    public partial class FormUteis : AdonaiSoft_Utilitario.Form4
     {
-        public Form2()
+        public FormUteis()
         {
             InitializeComponent();
         }
-        public Form2(String codigo)
+        public FormUteis(String codigo)
         {
             InitializeComponent();
             txtCodigo.Text = codigo;
         }
-        private void Form2_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtCodigo_TextChanged(object sender, EventArgs e)
+        private void FormUteis_Load(object sender, EventArgs e)
         {
 
         }

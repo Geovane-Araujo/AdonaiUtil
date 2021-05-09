@@ -9,7 +9,7 @@ namespace AdonaiSoft_Utilitario.Utilitario
 {
     class Util
     {
-        public static String Model(String[] coluna, String[] tipo, String package, String classe)
+        public static String Model(String[] coluna, String[] tipo, String package, String classe,String classNameConnection)
         {
             String atributo = "";
             String atributo2 = "";
@@ -166,7 +166,7 @@ namespace AdonaiSoft_Utilitario.Utilitario
             return codigo;
         }
 
-        public static String Resource(String[] coluna, String[] tipo, String package, String classe,String endPoint, Boolean requerToken)
+        public static String Resource(String[] coluna, String[] tipo, String package, String classe,String endPoint, Boolean requerToken, String classNameConnection)
         {
             
             String atributo = "";
@@ -277,7 +277,7 @@ namespace AdonaiSoft_Utilitario.Utilitario
             return codigo;
         }
 
-        public static String Controller(String[] coluna, String[] tipo, String package, String classe, String tabela,String[] fk, String[] fktableref, Boolean requerToken, String dbTokenTalse)
+        public static String Controller(String[] coluna, String[] tipo, String package, String classe, String tabela,String[] fk, String[] fktableref, Boolean requerToken, String dbTokenTalse, String classNameConnection)
         {
 
             String atributo = "";
@@ -551,136 +551,270 @@ namespace AdonaiSoft_Utilitario.Utilitario
             return codigo;
         }
 
-        public static String ControllerCrud(string className)
+        public static String ControllerCrud(string className, String classNameConnection, Boolean requerToken)
         {
-            string codigo = "import com.adonaisoft.AdonaiSoft.adonaisoftutil.UtilToken;\n" +
-            "import com.adonaisoft.AdonaiSoft.connection.AdonaiConnections;\n" +
-            "import com.adonaisoft.AdonaiSoft.controller.UtilController;\n" +
-            "import com.adonaisoft.AdonaiSoft.model.financeiro.PlanoContas;\n" +
-            "import com.pain_crud.Alias;\n" +
-            "import com.pain_crud.PainCrud;\n" +
-            "import org.springframework.web.bind.annotation.RestController;\n" +
-            "import java.sql.Connection;\n" +
-            "import java.sql.PreparedStatement;\n" +
-            "import java.sql.ResultSet;\n" +
-            "import java.sql.SQLException;\n" +
-            "import java.util.ArrayList;\n" +
-            "import java.util.Hashtable;\n" +
-            "import java.util.List;\n" +
-            "\n" +
-            "@RestController\n" +
-            "public class "+ className + "Controller {\n" +
-            "\n" +
-            "    AdonaiConnections connection = new AdonaiConnections();\n" +
-            "    UtilController util = new UtilController();\n" +
-            "    String sql =\"\" ;\n" +
-            "    String descricao = \"Cadastro."+ className+"\";\n" +
-            "    String log =\"\" ;\n" +
-            "    PainCrud pc = new PainCrud();\n" +
-            "\n" +
-            "\n" +
-            "\n" +
-            "    public " + className + " save(String token, " + className + " " + className.ToLower() + ") throws SQLException, IllegalAccessException {\n" +
-            "\n" +
-            "        Connection con = null;\n" +
-            "        PreparedStatement stmt = null;\n" +
-            "        int scalar = 0;\n" +
-            "\n" +
-            "        String decode = UtilToken.decode(token);\n" +
-            "        con = connection.Conexao(decode);\n" +
-            "\n" +
-            "        con.setAutoCommit(false);\n" +
-            "\n" +
-            "        if(" + className.ToLower() + ".isAdd()){\n" +
-            "            scalar = pc.insertedOne(" + className.ToLower() + "," + className + ".class,con);\n" +
-            "\n" +
-            "        }\n" +
-            "        else if(planocontas.isEdit()){\n" +
-            "            pc.editingOne(" + className.ToLower() + "," + className + ".class,con," + className.ToLower() + ".getId());\n" +
-            "        }\n" +
-            "        else if(planocontas.isDel()){\n" +
-            "            pc.deleted(con, " + className.ToLower() + ".getId(), " + className + ".class.getAnnotation(Alias.class).value());\n" +
-            "        }\n" +
-            "        con.commit();\n" +
-            "        con.close();\n" +
-            "        return " + className.ToLower() + ";\n" +
-            "    }\n" +
-            "    public Object getById(String token, int id) throws SQLException {\n" +
-            "\n" +
-            "        Object object = new Object();\n" +
-            "        Connection con = null;\n" +
-            "        con = connection.Conexao(UtilToken.decode(token));\n" +
-            "\n" +
-            "        String sql = \"select * from \"+" + className + ".class.getAnnotation(Alias.class).value()+\" where id = \" + id;\n" +
-            "\n" +
-            "        object =  pc.getOne(" + className + ".class,con,sql);\n" +
-            "\n" +
-            "        return object;\n" +
-            "    }\n" +
-            "}";
+            string codigo = "";
+            string util = "";
 
+            if (Form1.util)
+            {
+                util = "    UtilController util = new UtilController();\n";
+            }
+            if (requerToken)
+            {
+                 codigo = "import com.pain_crud.Alias;\n" +
+                "import com.pain_crud.PainCrud;\n" +
+                "import org.springframework.web.bind.annotation.RestController;\n" +
+                "import java.sql.Connection;\n" +
+                "import java.sql.PreparedStatement;\n" +
+                "import java.sql.ResultSet;\n" +
+                "import java.sql.SQLException;\n" +
+                "import java.util.ArrayList;\n" +
+                "import java.util.Hashtable;\n" +
+                "import java.util.List;\n" +
+                "\n" +
+                "@RestController\n" +
+                "public class " + className + "Controller {\n" +
+                "\n" +
+                "    " + classNameConnection + " connection = new " + classNameConnection + "();\n" +
+                util +
+                "    String sql =\"\" ;\n" +
+                "    String descricao = \"Cadastro." + className + "\";\n" +
+                "    String log =\"\" ;\n" +
+                "    PainCrud pc = new PainCrud();\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "    public " + className + " save(String token, " + className + " " + className.ToLower() + ") throws SQLException, IllegalAccessException {\n" +
+                "\n" +
+                "        Connection con = null;\n" +
+                "        PreparedStatement stmt = null;\n" +
+                "        int scalar = 0;\n" +
+                "\n" +
+                "        String decode = UtilToken.decode(token);\n" +
+                "        con = connection.getNewConnections(decode);\n" +
+                "\n" +
+                "        con.setAutoCommit(false);\n" +
+                "\n" +
+                "        if(" + className.ToLower() + ".isAdd()){\n" +
+                "            scalar = pc.insertedOne(" + className.ToLower() + "," + className + ".class,con);\n" +
+                "\n" +
+                "        }\n" +
+                "        else if(" + className.ToLower() + ".isEdit()){\n" +
+                "            pc.editingOne(" + className.ToLower() + "," + className + ".class,con," + className.ToLower() + ".getId());\n" +
+                "        }\n" +
+                "        else if(" + className.ToLower() + ".isDel()){\n" +
+                "            pc.deleted(con, " + className.ToLower() + ".getId(), " + className + ".class.getAnnotation(Alias.class).value());\n" +
+                "        }\n" +
+                "        con.commit();\n" +
+                "        con.close();\n" +
+                "        return " + className.ToLower() + ";\n" +
+                "    }\n" +
+                "    public Object getById(String token, int id) throws SQLException {\n" +
+                "\n" +
+                "        Object object = new Object();\n" +
+                "        Connection con = null;\n" +
+                "        con = connection.getNewConnections(UtilToken.decode(token));\n" +
+                "\n" +
+                "        String sql = \"select * from \"+" + className + ".class.getAnnotation(Alias.class).value()+\" where id = \" + id;\n" +
+                "\n" +
+                "        object =  pc.getOne(" + className + ".class,con,sql);\n" +
+                "\n" +
+                "        return object;\n" +
+                "    }\n" +
+                "}";
+            }
+            else
+            {
+                codigo = "import com.pain_crud.Alias;\n" +
+                "import com.pain_crud.PainCrud;\n" +
+                "import org.springframework.web.bind.annotation.RestController;\n" +
+                "import java.sql.Connection;\n" +
+                "import java.sql.PreparedStatement;\n" +
+                "import java.sql.ResultSet;\n" +
+                "import java.sql.SQLException;\n" +
+                "import java.util.ArrayList;\n" +
+                "import java.util.Hashtable;\n" +
+                "import java.util.List;\n" +
+                "\n" +
+                "@RestController\n" +
+                "public class " + className + "Controller {\n" +
+                "\n" +
+                "    " + classNameConnection + " connection = new " + classNameConnection + "();\n" +
+                util +
+                "    String sql =\"\" ;\n" +
+                "    String descricao = \"Cadastro." + className + "\";\n" +
+                "    String log =\"\" ;\n" +
+                "    PainCrud pc = new PainCrud();\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "    public " + className + " save(" + className + " " + className.ToLower() + ") throws SQLException, IllegalAccessException {\n" +
+                "\n" +
+                "        Connection con = null;\n" +
+                "        PreparedStatement stmt = null;\n" +
+                "        int scalar = 0;\n" +
+                "\n" +
+                "        con = connection.getNewConnections("+Form1.dbName+");\n" +
+                "\n" +
+                "        con.setAutoCommit(false);\n" +
+                "\n" +
+                "        if(" + className.ToLower() + ".isAdd()){\n" +
+                "            scalar = pc.insertedOne(" + className.ToLower() + "," + className + ".class,con);\n" +
+                "\n" +
+                "        }\n" +
+                "        else if(" + className.ToLower() + ".isEdit()){\n" +
+                "            pc.editingOne(" + className.ToLower() + "," + className + ".class,con," + className.ToLower() + ".getId());\n" +
+                "        }\n" +
+                "        else if(" + className.ToLower() + ".isDel()){\n" +
+                "            pc.deleted(con, " + className.ToLower() + ".getId(), " + className + ".class.getAnnotation(Alias.class).value());\n" +
+                "        }\n" +
+                "        con.commit();\n" +
+                "        con.close();\n" +
+                "        return " + className.ToLower() + ";\n" +
+                "    }\n" +
+                "    public Object getById(int id) throws SQLException {\n" +
+                "\n" +
+                "        Object object = new Object();\n" +
+                "        Connection con = null;\n" +
+                "        con = connection.getNewConnections(" + Form1.dbName + ");\n" +
+                "\n" +
+                "        String sql = \"select * from \"+" + className + ".class.getAnnotation(Alias.class).value()+\" where id = \" + id;\n" +
+                "\n" +
+                "        object =  pc.getOne(" + className + ".class,con,sql);\n" +
+                "\n" +
+                "        return object;\n" +
+                "    }\n" +
+                "}";
+            }
+            
             return codigo;
         }
 
-        public static String ResourceCrud(string package,string className)
+        public static String ResourceCrud(string package,string className,Boolean requerToken)
         {
-            string codigo = "import "+ package+"." + className + "Controller;\n" +
-            "import " + package + "." + className + ";\n" +
-            "import org.springframework.http.ResponseEntity;\n" +
-            "import org.springframework.web.bind.annotation.*;\n" +
-            "import org.springframework.beans.factory.annotation.Autowired;\n" +
-            "\n" +
-            "import javax.print.attribute.HashAttributeSet;\n" +
-            "import java.sql.SQLException;\n" +
-            "import java.util.Hashtable;\n" +
-            "import java.util.logging.Handler;\n" +
-            "\n" +
-            "\n" +
-            "@RestController\n" +
-            "@RequestMapping(value = \"/adonai\")\n" +
-            "@CrossOrigin(origins =\"*\")\n" +
-            "public class " + className + "Resource {\n" +
-            "\n" +
-            "    @Autowired\n" +
-            "    " + className + "Controller " + className.ToLower() + "Controller;\n" +
-            "\n" +
-            "    @PostMapping(\"/" + className.ToLower() + "\")\n" +
-            "    public ResponseEntity<?> save(@RequestHeader(value = \"Authorization\")String token, @RequestBody " + className + " " + className.ToLower() + ")  {\n" +
-            "\n" +
-            "        Hashtable retorno = new Hashtable();\n" +
-            "        try {\n" +
-            "            " + className.ToLower() + "Controller.save(token, " + className.ToLower() + ");\n" +
-            "            retorno.put(\"ret\", \"success\");\n" +
-            "            retorno.put(\"motivo\", \"OK\");\n" +
-            "            retorno.put(\"obj\", " + className.ToLower() + ");\n" +
-            "        }\n" +
-            "        catch (SQLException e ) {\n" +
-            "            retorno.put(\"ret\", \"unsuccess\");\n" +
-            "            retorno.put(\"motivo\",e.getMessage());\n" +
-            "        } catch (IllegalAccessException ex) {\n" +
-            "            retorno.put(\"ret\", \"unsuccess\");\n" +
-            "            retorno.put(\"motivo\",ex.getMessage());\n" +
-            "        }\n" +
-            "\n" +
-            "        return ResponseEntity.ok().body(retorno);\n" +
-            "    }\n" +
-            "    @GetMapping(\"/" + className.ToLower() + "/{id}\")\n" +
-            "    public ResponseEntity<?> get(@RequestHeader(value = \"Authorization\")String token, @PathVariable(value=\"id\") int id) throws SQLException {\n" +
-            "\n" +
-            "        Hashtable retorno = new Hashtable();\n" +
-            "        try {\n" +
-            "            retorno.put(\"obj\", " + className.ToLower() + "Controller.getById(token, id));\n" +
-            "            retorno.put(\"ret\", \"success\");\n" +
-            "            retorno.put(\"motivo\", \"OK\");\n" +
-            "        }\n" +
-            "        catch (SQLException e ) {\n" +
-            "            retorno.put(\"ret\", \"unsuccess\");\n" +
-            "            retorno.put(\"motivo\",e.getMessage());\n" +
-            "        }\n" +
-            "\n" +
-            "        return ResponseEntity.ok().body(retorno);\n" +
-            "    }\n" +
-            "}";
+            string codigo = "";
+            if (requerToken)
+            {
+                codigo = "import " + package + "." + className + "Controller;\n" +
+                "import " + package + "." + className + ";\n" +
+                "import org.springframework.http.ResponseEntity;\n" +
+                "import org.springframework.web.bind.annotation.*;\n" +
+                "import org.springframework.beans.factory.annotation.Autowired;\n" +
+                "\n" +
+                "import javax.print.attribute.HashAttributeSet;\n" +
+                "import java.sql.SQLException;\n" +
+                "import java.util.Hashtable;\n" +
+                "import java.util.logging.Handler;\n" +
+                "\n" +
+                "\n" +
+                "@RestController\n" +
+                "@RequestMapping(value = \"/"+Form1.endpointName+"\")\n" +
+                "@CrossOrigin(origins =\"*\")\n" +
+                "public class " + className + "Resource {\n" +
+                "\n" +
+                "    @Autowired\n" +
+                "    " + className + "Controller " + className.ToLower() + "Controller;\n" +
+                "\n" +
+                "    @PostMapping(\"/" + className.ToLower() + "\")\n" +
+                "    public ResponseEntity<?> save(@RequestHeader(value = \"Authorization\")String token, @RequestBody " + className + " " + className.ToLower() + ")  {\n" +
+                "\n" +
+                "        Hashtable retorno = new Hashtable();\n" +
+                "        try {\n" +
+                "            " + className.ToLower() + "Controller.save(token, " + className.ToLower() + ");\n" +
+                "            retorno.put(\"ret\", \"success\");\n" +
+                "            retorno.put(\"motivo\", \"OK\");\n" +
+                "            retorno.put(\"obj\", " + className.ToLower() + ");\n" +
+                "        }\n" +
+                "        catch (SQLException e ) {\n" +
+                "            retorno.put(\"ret\", \"unsuccess\");\n" +
+                "            retorno.put(\"motivo\",e.getMessage());\n" +
+                "        } catch (IllegalAccessException ex) {\n" +
+                "            retorno.put(\"ret\", \"unsuccess\");\n" +
+                "            retorno.put(\"motivo\",ex.getMessage());\n" +
+                "        }\n" +
+                "\n" +
+                "        return ResponseEntity.ok().body(retorno);\n" +
+                "    }\n" +
+                "    @GetMapping(\"/" + className.ToLower() + "/{id}\")\n" +
+                "    public ResponseEntity<?> get(@RequestHeader(value = \"Authorization\")String token, @PathVariable(value=\"id\") int id) throws SQLException {\n" +
+                "\n" +
+                "        Hashtable retorno = new Hashtable();\n" +
+                "        try {\n" +
+                "            retorno.put(\"obj\", " + className.ToLower() + "Controller.getById(token, id));\n" +
+                "            retorno.put(\"ret\", \"success\");\n" +
+                "            retorno.put(\"motivo\", \"OK\");\n" +
+                "        }\n" +
+                "        catch (SQLException e ) {\n" +
+                "            retorno.put(\"ret\", \"unsuccess\");\n" +
+                "            retorno.put(\"motivo\",e.getMessage());\n" +
+                "        }\n" +
+                "\n" +
+                "        return ResponseEntity.ok().body(retorno);\n" +
+                "    }\n" +
+                "}";
+            }
+            else
+            {
+                codigo = "import " + package + "." + className + "Controller;\n" +
+                "import " + package + "." + className + ";\n" +
+                "import org.springframework.http.ResponseEntity;\n" +
+                "import org.springframework.web.bind.annotation.*;\n" +
+                "import org.springframework.beans.factory.annotation.Autowired;\n" +
+                "\n" +
+                "import javax.print.attribute.HashAttributeSet;\n" +
+                "import java.sql.SQLException;\n" +
+                "import java.util.Hashtable;\n" +
+                "import java.util.logging.Handler;\n" +
+                "\n" +
+                "\n" +
+                "@RestController\n" +
+                "@RequestMapping(value = \"/" + Form1.endpointName + "\")\n" +
+                "@CrossOrigin(origins =\"*\")\n" +
+                "public class " + className + "Resource {\n" +
+                "\n" +
+                "    @Autowired\n" +
+                "    " + className + "Controller " + className.ToLower() + "Controller;\n" +
+                "\n" +
+                "    @PostMapping(\"/" + className.ToLower() + "\")\n" +
+                "    public ResponseEntity<?> save(@RequestBody " + className + " " + className.ToLower() + ")  {\n" +
+                "\n" +
+                "        Hashtable retorno = new Hashtable();\n" +
+                "        try {\n" +
+                "            " + className.ToLower() + "Controller.save(" + className.ToLower() + ");\n" +
+                "            retorno.put(\"ret\", \"success\");\n" +
+                "            retorno.put(\"motivo\", \"OK\");\n" +
+                "            retorno.put(\"obj\", " + className.ToLower() + ");\n" +
+                "        }\n" +
+                "        catch (SQLException e ) {\n" +
+                "            retorno.put(\"ret\", \"unsuccess\");\n" +
+                "            retorno.put(\"motivo\",e.getMessage());\n" +
+                "        } catch (IllegalAccessException ex) {\n" +
+                "            retorno.put(\"ret\", \"unsuccess\");\n" +
+                "            retorno.put(\"motivo\",ex.getMessage());\n" +
+                "        }\n" +
+                "\n" +
+                "        return ResponseEntity.ok().body(retorno);\n" +
+                "    }\n" +
+                "    @GetMapping(\"/" + className.ToLower() + "/{id}\")\n" +
+                "    public ResponseEntity<?> get(@PathVariable(value=\"id\") int id) throws SQLException {\n" +
+                "\n" +
+                "        Hashtable retorno = new Hashtable();\n" +
+                "        try {\n" +
+                "            retorno.put(\"obj\", " + className.ToLower() + "Controller.getById(id));\n" +
+                "            retorno.put(\"ret\", \"success\");\n" +
+                "            retorno.put(\"motivo\", \"OK\");\n" +
+                "        }\n" +
+                "        catch (SQLException e ) {\n" +
+                "            retorno.put(\"ret\", \"unsuccess\");\n" +
+                "            retorno.put(\"motivo\",e.getMessage());\n" +
+                "        }\n" +
+                "\n" +
+                "        return ResponseEntity.ok().body(retorno);\n" +
+                "    }\n" +
+                "}";
+            }
+            
 
             return codigo;
         }
@@ -695,14 +829,16 @@ namespace AdonaiSoft_Utilitario.Utilitario
 
             String codigo = "package " + package + ".model;\n\n";
             codigo += "import java.io.Serializable; \n\n";
+            codigo += "@Alias(value = \""+Form1.tableName+"\")\n";
             codigo += "public class " + classe + " implements Serializable {\n\n\n";
+            codigo += "    @Ignore\n";
             codigo += "    private static final long serialVersionUID = 1L;\n\n";
             codigo += "    @Ignore\n";
-            codigo += "    private boolean add;\n";
+            codigo += "    private boolean add = true;\n";
             codigo += "    @Ignore\n";
-            codigo += "    private boolean edit;\n";
+            codigo += "    private boolean edit = false;\n";
             codigo += "    @Ignore\n";
-            codigo += "    private boolean del;\n\n";
+            codigo += "    private boolean del = false;\n\n";
 
             for (int i = 0; i < coluna.Length; i++)
             {
