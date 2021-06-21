@@ -109,5 +109,18 @@ E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\o
 E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csproj.CopyComplete
 E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.exe
 E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.pdb
-E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft Utilitario.csprojAssemblyReference.cache
 E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\obj\Debug\AdonaiSoft_Utilitario.FormUteis.resources
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\BouncyCastle.Crypto.dll
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\Google.Protobuf.dll
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\K4os.Compression.LZ4.dll
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\K4os.Compression.LZ4.Streams.dll
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\K4os.Hash.xxHash.dll
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\MySql.Data.dll
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\Ubiety.Dns.Core.dll
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\Zstandard.Net.dll
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\Google.Protobuf.pdb
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\Google.Protobuf.xml
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\K4os.Compression.LZ4.xml
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\K4os.Compression.LZ4.Streams.xml
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\K4os.Hash.xxHash.xml
+E:\Adonai Workspace\AdonaiSoft Sistemas\AdonaiSoft Uteis\AdonaiSoft Utilitario\bin\Debug\MySql.Data.xml

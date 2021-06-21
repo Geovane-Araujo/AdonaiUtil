@@ -100,175 +100,10 @@ namespace AdonaiSoft_Utilitario
 
         private void metroButton3_Click(object sender, EventArgs e)
         {
-            String model = "";
-            dbName = txtDataBase.Text;
-            tableName = txtTabela.Text;
-            endpointName = txtendpoint.Text;
-            util = cheUtil.Checked;
-            rest = cheRest.Checked;
+            
             if (cmbBanco.Text == "PostgreSql")
             {
-                try
-                {
-                    NpgsqlConnection con = new NpgsqlConnection("Host="+ txtLocalBanco.Text+";Username="+txtUser.Text+";Password="+txtPassword.Text+";Database="+txtDataBase.Text);
-                    con.Open();
-                    NpgsqlConnection cona = new NpgsqlConnection("Host=" + txtLocalBanco.Text + ";Username=" + txtUser.Text + ";Password=" + txtPassword.Text + ";Database=" + txtDataBase.Text);
-                    cona.Open();
-
-                    String sql = "SELECT COUNT(column_name) as p FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + txtTabela.Text + "'";
-                    NpgsqlCommand command = new NpgsqlCommand(sql, con);
-
-                    NpgsqlDataReader rs = command.ExecuteReader();
-
-                    int count = 0;
-
-                    if (rs.HasRows)
-                    {
-                       
-                        while (rs.Read())
-                        {
-
-                            count = rs.GetInt32(rs.GetOrdinal("p"));
-                        }
-                    }
-                    rs.Close();
-
-
-                    String[] coluna = new string[count];
-                    String[] tipo = new string[count];
-                    sql = "SELECT column_name as coluna, data_type as tipo FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + txtTabela.Text + "' ORDER BY ORDINAL_POSITION";
-                    NpgsqlCommand commandD = new NpgsqlCommand(sql,con);
-
-
-                    rs = commandD.ExecuteReader();
-
-                    if (rs.HasRows)
-                    {
-                        int i = 0;
-                        while (rs.Read())
-                        {
-
-                            coluna[i] = rs.GetString(rs.GetOrdinal("coluna"));
-                            tipo[i] = rs.GetString(rs.GetOrdinal("tipo"));
-                            i = i + 1;
-                            
-                        }
-                        if(cheModel.Checked)// Aqui .é o model
-                        {
-                            if (checlassico.Checked)
-                            {
-                                model = Util.Model(coluna, tipo, txtPakage.Text, txtClasse.Text,txtConexao.Text);
-                            }
-                            else if (chepain.Checked)
-                            {
-                                model = Util.ModelPain(coluna, tipo, txtPakage.Text, txtClasse.Text);
-                            }
-                            
-                            Form2 txtmodel = new Form2(model);
-                            txtmodel.Show();
-                        }
-                        if (cheResource.Checked)// Aqui .é o Resource
-                        {
-                            if (checlassico.Checked)
-                            {
-                                model = Util.Resource(coluna, tipo, txtPakage.Text, txtClasse.Text, txtendpoint.Text, cheToken.Checked, txtConexao.Text);
-                            }
-                            else if (chepain.Checked)
-                            {
-                                model = Util.ResourceCrud(txtPakage.Text, txtClasse.Text, cheToken.Checked);
-                            }
-                            
-                            Form3 txtmodel = new Form3(model);
-                            txtmodel.Show();
-                        }
-                        if (cheController.Checked) // Aqui é o controller, no caso do pain-crud aqui irá mudar
-                        {
-                            String sqla = "SELECT COUNT(kcu.column_name) as p "+
-                                " FROM  information_schema.table_constraints AS tc "+
-                                    "JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema " +
-                                    "JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name AND ccu.table_schema = tc.table_schema" +
-                                " WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name = '"+ txtTabela.Text+ "' " +
-                                " group by kcu.column_name,ccu.table_name,ccu.column_name";
-
-                            NpgsqlCommand commandE = new NpgsqlCommand(sqla, cona);
-                            NpgsqlDataReader rsE = commandE.ExecuteReader();
-
-                            count = 0;
-                            if (rsE.HasRows)
-                            {
-
-                                while (rsE.Read())
-                                {
-
-                                    count++;
-                                }
-                            }
-                            rsE.Close();
-                            cona.Close();
-
-                            cona.Open();
-
-                            sqla = "SELECT kcu.column_name, ccu.table_name AS tabelaref, ccu.column_name AS columnref, tc.table_name," +
-                                " ('INNER JOIN ' || ccu.table_name || ' ON ' || tc.table_name || '.' || kcu.column_name || ' = ' || ccu.table_name || '.' || ccu.column_name )as fk " +
-                                " FROM  information_schema.table_constraints AS tc " +
-                                    "JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema " +
-                                    "JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name AND ccu.table_schema = tc.table_schema" +
-                                " WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name = '" + txtTabela.Text + "' " +
-                                " group by kcu.column_name,ccu.table_name,ccu.column_name, tc.table_name ";
-
-                            commandE = new NpgsqlCommand(sqla, cona);
-                            rsE = commandE.ExecuteReader();
-
-
-                            String[] fk = new string[count];
-                            String[] fktableref = new string[count];
-
-                            if (rsE.HasRows)
-                            {
-                                i = 0;
-                                while (rsE.Read())
-                                {
-                                    fk[i] = rsE.GetString(rsE.GetOrdinal("fk"));
-                                    fktableref[i] = rsE.GetString(rsE.GetOrdinal("tabelaref"));
-                                    i = i + 1;
-                                }
-                            }
-                            rsE.Close();
-                            String Tabelasref = "";
-                            for(i = 0;  i < fktableref.Length; i++)
-                            {
-                                if(fktableref.Equals("pessoa"))
-                                {
-                                    Tabelasref = Tabelasref + fktableref[i] + ".nome, ";
-                                }
-                                else
-                                {
-                                    Tabelasref = Tabelasref + fktableref[i] + ".descricao, ";
-                                }
-                                
-                            }
-
-                            if (checlassico.Checked)
-                            {
-                                model = Util.Controller(coluna, tipo, txtPakage.Text, txtClasse.Text, txtTabela.Text, fk, fktableref, cheToken.Checked, txtDataBase.Text, txtConexao.Text);
-                            }
-                            else if (chepain.Checked)
-                            {
-                                model = Util.ControllerCrud(txtClasse.Text, txtConexao.Text, cheToken.Checked);
-                            }
-
-                            
-                            Form4 txtmodel = new Form4(model);
-                            txtmodel.Show();
-                        }
-
-                    }
-
-            }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "Falha", MessageBoxButtons.OK);
-                }
+                generatePostgres();
             }
             else if(cmbBanco.Text == "SQL Server")
             {
@@ -276,7 +111,7 @@ namespace AdonaiSoft_Utilitario
             }
             else
             {
-                MessageBox.Show("Ainda não configurado", "Atenção", MessageBoxButtons.OK);
+                generateMySql();
             }
             
         }
@@ -861,6 +696,354 @@ namespace AdonaiSoft_Utilitario
                 "}";
             FormUteis txtmodel = new FormUteis(util);
             txtmodel.Show();
+        }
+
+        private void generatePostgres()
+        {
+            String model = "";
+            dbName = txtDataBase.Text;
+            tableName = txtTabela.Text;
+            endpointName = txtendpoint.Text;
+            util = cheUtil.Checked;
+            rest = cheRest.Checked;
+            try
+            {
+                NpgsqlConnection con = new NpgsqlConnection("Host=" + txtLocalBanco.Text + ";Username=" + txtUser.Text + ";Password=" + txtPassword.Text + ";Database=" + txtDataBase.Text);
+                con.Open();
+                NpgsqlConnection cona = new NpgsqlConnection("Host=" + txtLocalBanco.Text + ";Username=" + txtUser.Text + ";Password=" + txtPassword.Text + ";Database=" + txtDataBase.Text);
+                cona.Open();
+
+                String sql = "SELECT COUNT(column_name) as p FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + txtTabela.Text + "'";
+                NpgsqlCommand command = new NpgsqlCommand(sql, con);
+
+                NpgsqlDataReader rs = command.ExecuteReader();
+
+                int count = 0;
+
+                if (rs.HasRows)
+                {
+
+                    while (rs.Read())
+                    {
+
+                        count = rs.GetInt32(rs.GetOrdinal("p"));
+                    }
+                }
+                rs.Close();
+
+
+                String[] coluna = new string[count];
+                String[] tipo = new string[count];
+                sql = "SELECT column_name as coluna, data_type as tipo FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + txtTabela.Text + "' ORDER BY ORDINAL_POSITION";
+                NpgsqlCommand commandD = new NpgsqlCommand(sql, con);
+
+
+                rs = commandD.ExecuteReader();
+
+                if (rs.HasRows)
+                {
+                    int i = 0;
+                    while (rs.Read())
+                    {
+
+                        coluna[i] = rs.GetString(rs.GetOrdinal("coluna"));
+                        tipo[i] = rs.GetString(rs.GetOrdinal("tipo"));
+                        i = i + 1;
+
+                    }
+                    if (cheModel.Checked)// Aqui .é o model
+                    {
+                        if (checlassico.Checked)
+                        {
+                            model = Util.Model(coluna, tipo, txtPakage.Text, txtClasse.Text, txtConexao.Text);
+                        }
+                        else if (chepain.Checked)
+                        {
+                            model = Util.ModelPain(coluna, tipo, txtPakage.Text, txtClasse.Text);
+                        }
+
+                        Form2 txtmodel = new Form2(model);
+                        txtmodel.Show();
+                    }
+                    if (cheResource.Checked)// Aqui .é o Resource
+                    {
+                        if (checlassico.Checked)
+                        {
+                            model = Util.Resource(coluna, tipo, txtPakage.Text, txtClasse.Text, txtendpoint.Text, cheToken.Checked, txtConexao.Text);
+                        }
+                        else if (chepain.Checked)
+                        {
+                            model = Util.ResourceCrud(txtPakage.Text, txtClasse.Text, cheToken.Checked);
+                        }
+
+                        Form3 txtmodel = new Form3(model);
+                        txtmodel.Show();
+                    }
+                    if (cheController.Checked) // Aqui é o controller, no caso do pain-crud aqui irá mudar
+                    {
+                        String sqla = "SELECT COUNT(kcu.column_name) as p " +
+                            " FROM  information_schema.table_constraints AS tc " +
+                                "JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema " +
+                                "JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name AND ccu.table_schema = tc.table_schema" +
+                            " WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name = '" + txtTabela.Text + "' " +
+                            " group by kcu.column_name,ccu.table_name,ccu.column_name";
+
+                        NpgsqlCommand commandE = new NpgsqlCommand(sqla, cona);
+                        NpgsqlDataReader rsE = commandE.ExecuteReader();
+
+                        count = 0;
+                        if (rsE.HasRows)
+                        {
+
+                            while (rsE.Read())
+                            {
+
+                                count++;
+                            }
+                        }
+                        rsE.Close();
+                        cona.Close();
+
+                        cona.Open();
+
+                        sqla = "SELECT kcu.column_name, ccu.table_name AS tabelaref, ccu.column_name AS columnref, tc.table_name," +
+                            " ('INNER JOIN ' || ccu.table_name || ' ON ' || tc.table_name || '.' || kcu.column_name || ' = ' || ccu.table_name || '.' || ccu.column_name )as fk " +
+                            " FROM  information_schema.table_constraints AS tc " +
+                                "JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema " +
+                                "JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name AND ccu.table_schema = tc.table_schema" +
+                            " WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name = '" + txtTabela.Text + "' " +
+                            " group by kcu.column_name,ccu.table_name,ccu.column_name, tc.table_name ";
+
+                        commandE = new NpgsqlCommand(sqla, cona);
+                        rsE = commandE.ExecuteReader();
+
+
+                        String[] fk = new string[count];
+                        String[] fktableref = new string[count];
+
+                        if (rsE.HasRows)
+                        {
+                            i = 0;
+                            while (rsE.Read())
+                            {
+                                fk[i] = rsE.GetString(rsE.GetOrdinal("fk"));
+                                fktableref[i] = rsE.GetString(rsE.GetOrdinal("tabelaref"));
+                                i = i + 1;
+                            }
+                        }
+                        rsE.Close();
+                        String Tabelasref = "";
+                        for (i = 0; i < fktableref.Length; i++)
+                        {
+                            if (fktableref.Equals("pessoa"))
+                            {
+                                Tabelasref = Tabelasref + fktableref[i] + ".nome, ";
+                            }
+                            else
+                            {
+                                Tabelasref = Tabelasref + fktableref[i] + ".descricao, ";
+                            }
+
+                        }
+
+                        if (checlassico.Checked)
+                        {
+                            model = Util.Controller(coluna, tipo, txtPakage.Text, txtClasse.Text, txtTabela.Text, fk, fktableref, cheToken.Checked, txtDataBase.Text, txtConexao.Text);
+                        }
+                        else if (chepain.Checked)
+                        {
+                            model = Util.ControllerCrud(txtClasse.Text, txtConexao.Text, cheToken.Checked);
+                        }
+
+
+                        Form4 txtmodel = new Form4(model);
+                        txtmodel.Show();
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Falha", MessageBoxButtons.OK);
+            }
+        }
+
+        private void generateMySql()
+        {
+            String model = "";
+            dbName = txtDataBase.Text;
+            tableName = txtTabela.Text;
+            endpointName = txtendpoint.Text;
+            util = cheUtil.Checked;
+            rest = cheRest.Checked;
+            try
+            {
+                MySql.Data.MySqlClient.MySqlConnection con = new MySql.Data.MySqlClient.MySqlConnection("Server=" + txtLocalBanco.Text + ";Database=" + txtDataBase.Text + ";Uid=" + txtUser.Text + ";Pwd=" + txtPassword.Text);
+                con.Open();
+                MySql.Data.MySqlClient.MySqlConnection cona = new MySql.Data.MySqlClient.MySqlConnection("Server=" + txtLocalBanco.Text + ";Database=" + txtDataBase.Text + ";Uid=" + txtUser.Text + ";Pwd=" + txtPassword.Text);
+                cona.Open();
+
+                String sql = "SELECT Count(column_name) as p FROM INFORMATION_SCHEMA.COLUMNS where table_name = '" + txtTabela.Text + "' and table_schema = '" + txtDataBase.Text + "'";
+                MySql.Data.MySqlClient.MySqlCommand command = new MySql.Data.MySqlClient.MySqlCommand(sql, con);
+
+                MySql.Data.MySqlClient.MySqlDataReader rs = command.ExecuteReader();
+
+                int count = 0;
+
+                if (rs.HasRows)
+                {
+
+                    while (rs.Read())
+                    {
+
+                        count = rs.GetInt32(rs.GetOrdinal("p"));
+                    }
+                }
+                rs.Close();
+
+
+                String[] coluna = new string[count];
+                String[] tipo = new string[count];
+                sql = "SELECT column_name as coluna, data_type as tipo FROM INFORMATION_SCHEMA.COLUMNS where table_name = '" + txtTabela.Text + "' and table_schema = '"+ txtDataBase.Text + "' ORDER BY ORDINAL_POSITION";
+                MySql.Data.MySqlClient.MySqlCommand commandD = new MySql.Data.MySqlClient.MySqlCommand(sql, con);
+
+
+                rs = commandD.ExecuteReader();
+
+                if (rs.HasRows)
+                {
+                    int i = 0;
+                    while (rs.Read())
+                    {
+
+                        coluna[i] = rs.GetString(rs.GetOrdinal("coluna"));
+                        tipo[i] = rs.GetString(rs.GetOrdinal("tipo"));
+                        i = i + 1;
+
+                    }
+                    if (cheModel.Checked)// Aqui .é o model
+                    {
+                        if (checlassico.Checked)
+                        {
+                            if(lang.Text.Equals("Java"))
+                                model = Util.Model(coluna, tipo, txtPakage.Text, txtClasse.Text, txtConexao.Text);
+                            else if(lang.Text.Equals("C#"))
+                                model = Util.ModelCsharp(coluna, tipo, txtPakage.Text, txtClasse.Text, txtConexao.Text);
+                        }
+                        else if (chepain.Checked)//apenas java
+                        {
+                            model = Util.ModelPain(coluna, tipo, txtPakage.Text, txtClasse.Text);
+                        }
+
+                        Form2 txtmodel = new Form2(model);
+                        txtmodel.Show();
+                    }
+                    if (cheResource.Checked)// Aqui .é o Resource
+                    {
+                        if (checlassico.Checked)
+                        {
+                            model = Util.Resource(coluna, tipo, txtPakage.Text, txtClasse.Text, txtendpoint.Text, cheToken.Checked, txtConexao.Text);
+                        }
+                        else if (chepain.Checked)
+                        {
+                            model = Util.ResourceCrud(txtPakage.Text, txtClasse.Text, cheToken.Checked);
+                        }
+
+                        Form3 txtmodel = new Form3(model);
+                        txtmodel.Show();
+                    }
+                    if (cheController.Checked) // Aqui é o controller, no caso do pain-crud aqui irá mudar
+                    {
+                        //String sqla = "SELECT COUNT(kcu.column_name) as p " +
+                        //    " FROM  information_schema.table_constraints AS tc " +
+                        //        "JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema " +
+                        //        "JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name AND ccu.table_schema = tc.table_schema" +
+                        //    " WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name = '" + txtTabela.Text + "' " +
+                        //    " group by kcu.column_name,ccu.table_name,ccu.column_name";
+
+                        //NpgsqlCommand commandE = new NpgsqlCommand(sqla, cona);
+                        //NpgsqlDataReader rsE = commandE.ExecuteReader();
+
+                        //count = 0;
+                        //if (rsE.HasRows)
+                        //{
+
+                        //    while (rsE.Read())
+                        //    {
+
+                        //        count++;
+                        //    }
+                        //}
+                        //rsE.Close();
+                        //cona.Close();
+
+                        //cona.Open();
+
+                        //sqla = "SELECT kcu.column_name, ccu.table_name AS tabelaref, ccu.column_name AS columnref, tc.table_name," +
+                        //    " ('INNER JOIN ' || ccu.table_name || ' ON ' || tc.table_name || '.' || kcu.column_name || ' = ' || ccu.table_name || '.' || ccu.column_name )as fk " +
+                        //    " FROM  information_schema.table_constraints AS tc " +
+                        //        "JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema " +
+                        //        "JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name AND ccu.table_schema = tc.table_schema" +
+                        //    " WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name = '" + txtTabela.Text + "' " +
+                        //    " group by kcu.column_name,ccu.table_name,ccu.column_name, tc.table_name ";
+
+                        //commandE = new NpgsqlCommand(sqla, cona);
+                        //rsE = commandE.ExecuteReader();
+
+
+                        //String[] fk = new string[count];
+                        //String[] fktableref = new string[count];
+
+                        //if (rsE.HasRows)
+                        //{
+                        //    i = 0;
+                        //    while (rsE.Read())
+                        //    {
+                        //        fk[i] = rsE.GetString(rsE.GetOrdinal("fk"));
+                        //        fktableref[i] = rsE.GetString(rsE.GetOrdinal("tabelaref"));
+                        //        i = i + 1;
+                        //    }
+                        //}
+                        //rsE.Close();
+                        //String Tabelasref = "";
+                        //for (i = 0; i < fktableref.Length; i++)
+                        //{
+                        //    if (fktableref.Equals("pessoa"))
+                        //    {
+                        //        Tabelasref = Tabelasref + fktableref[i] + ".nome, ";
+                        //    }
+                        //    else
+                        //    {
+                        //        Tabelasref = Tabelasref + fktableref[i] + ".descricao, ";
+                        //    }
+
+                        //}
+
+                        if (checlassico.Checked)
+                        {
+                            if (lang.Text.Equals("Java"))
+                                model = Util.Controller(coluna, tipo, txtPakage.Text, txtClasse.Text, txtTabela.Text,new String[10], new String[10], cheToken.Checked, txtDataBase.Text, txtConexao.Text);
+                            else if (lang.Text.Equals("C#"))
+                                model = Util.ControllerCSharpSimple(coluna, tipo, txtPakage.Text, txtClasse.Text, txtTabela.Text, new String[10], new String[10], cheToken.Checked, txtDataBase.Text, txtConexao.Text);
+                        }
+                        else if (chepain.Checked)
+                        {
+                            model = Util.ControllerCrud(txtClasse.Text, txtConexao.Text, cheToken.Checked);
+                        }
+
+
+                        Form4 txtmodel = new Form4(model);
+                        txtmodel.Show();
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Falha", MessageBoxButtons.OK);
+            }
         }
     }
 }

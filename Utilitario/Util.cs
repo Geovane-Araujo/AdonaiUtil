@@ -31,6 +31,14 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 {
                     tipoatributo = "int";
                 }
+                else if(tipo[i].Equals("int"))
+                {
+                    tipoatributo = "int";
+                }
+                else if (tipo[i].Equals("varchar"))
+                {
+                    tipoatributo = "String";
+                }
                 else if(tipo[i].Equals("character varying"))
                 {
                     tipoatributo = "String";
@@ -162,6 +170,76 @@ namespace AdonaiSoft_Utilitario.Utilitario
             }
             codigo += "\n}";
 
+
+            return codigo;
+        }
+
+        public static String ModelCsharp(String[] coluna, String[] tipo, String package, String classe, String classNameConnection)
+        {
+            String atributo = "";
+            String atributo2 = "";
+            String tipoatributo = "";
+            var aux = "";
+            var aux2 = "";
+
+            String codigo = "\n\n";
+ 
+
+            for (int i = 0; i < coluna.Length; i++)
+            {
+                if (tipo[i].Equals("integer"))
+                {
+                    tipoatributo = "int";
+                }
+                else if (tipo[i].Equals("int"))
+                {
+                    tipoatributo = "int";
+                }
+                else if (tipo[i].Equals("varchar"))
+                {
+                    tipoatributo = "String";
+                }
+                else if (tipo[i].Equals("character varying"))
+                {
+                    tipoatributo = "String";
+                }
+                else if (tipo[i].Equals("real"))
+                {
+                    tipoatributo = "double";
+                }
+                else if (tipo[i].Equals("text"))
+                {
+                    tipoatributo = "String";
+                }
+                else if (tipo[i].Equals("double precision"))
+                {
+                    tipoatributo = "double";
+                }
+                else if (tipo[i].Equals("byte"))
+                {
+                    tipoatributo = "byte";
+                }
+                else if (tipo[i].Equals("bytea"))
+                {
+                    tipoatributo = "bytes";
+                }
+                else if (tipo[i].Equals("bigint"))
+                {
+                    tipoatributo = "long";
+                }
+                else if (tipo[i].Equals("timestamp without time zone"))
+                {
+                    tipoatributo = "Timestamp";
+                }
+                else if (tipo[i].Equals("date"))
+                {
+                    tipoatributo = "DateTime";
+                }
+
+                aux = coluna[i];
+                atributo = char.ToLower(aux[0]) + aux.Substring(1);
+                codigo += "    public " + tipoatributo + " " + atributo + " { get; set; } \n\n";
+            }
 
             return codigo;
         }
@@ -551,18 +629,64 @@ namespace AdonaiSoft_Utilitario.Utilitario
             return codigo;
         }
 
+        public static String ControllerCSharpSimple(String[] coluna, String[] tipo, String package, String classe, String tabela, String[] fk, String[] fktableref, Boolean requerToken, String dbTokenTalse, String classNameConnection)
+        {
+
+            String sql = "";
+
+            String codigo = "";
+
+            String values = "";
+            for (int i = 1; i < coluna.Length; i++)
+            {
+                sql = sql + " " + coluna[i] + ",";
+                values += "@" + coluna[i] + ",";
+            }
+
+            sql = "INSERT INTO " + tabela + "(" + sql.Substring(0, sql.Length - 1) + ") VALUES(" + values.Substring(0, values.Length - 1) + ");";
+
+            codigo = "public Object ExampleCode()\n" +
+            "        {\n" +
+            "            Object obj = \"\";\n" +
+            "            try\n" +
+            "            {\n" +
+            "                var con = AdConnection();\n" +
+            "                string sql = \""+ sql + "\";\n\n" +
+            "                var command = new MySql.Data.MySqlClient.MySqlCommand(sql, con);\n\n";
+            foreach (String col in coluna)
+            {
+                codigo += "                command.Parameters.AddWithValue(\"@" + col + "\", " + col + ");\n";
+            }
+            codigo +="                command.ExecuteNonQuery();\n" +
+            "\n" +
+            "                command.Dispose();\n" +
+            "                con.Close();\n" +
+            "            }\n" +
+            "            catch (Exception ex)\n" +
+            "            {\n" +
+            "                obj = ex.Message;\n" +
+            "            }\n" +
+            "            return obj;\n" +
+            "        }";
+
+            return codigo;
+        }
+
         public static String ControllerCrud(string className, String classNameConnection, Boolean requerToken)
         {
             string codigo = "";
             string util = "";
+            string rest = "";
 
             if (Form1.util)
             {
                 util = "    UtilController util = new UtilController();\n";
             }
-            if (requerToken)
+            if (Form1.rest)
             {
-                 codigo = "import com.pain_crud.Alias;\n" +
+                codigo = "" +
+                    "\n\n\n\n" +
+                    "import com.pain_crud.Alias;\n" +
                 "import com.pain_crud.PainCrud;\n" +
                 "import org.springframework.web.bind.annotation.RestController;\n" +
                 "import java.sql.Connection;\n" +
@@ -572,9 +696,36 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 "import java.util.ArrayList;\n" +
                 "import java.util.Hashtable;\n" +
                 "import java.util.List;\n" +
-                "\n" +
-                "@RestController\n" +
-                "public class " + className + "Controller {\n" +
+                "\n"+"/**\n" +
+                        " *\n" +
+                        " * @author Geovane\n" +
+                        " * Gerado automaticaente por AdonaiSoft - Utilitário\n" +
+                        " */\n\n"+
+                "@RestController\n";
+            }
+            else
+            {
+                codigo = "import com.pain_crud.Alias;\n" +
+                "import com.pain_crud.PainCrud;\n" +
+                "import java.sql.Connection;\n" +
+                "import java.sql.PreparedStatement;\n" +
+                "import java.sql.ResultSet;\n" +
+                "import java.sql.SQLException;\n" +
+                "import java.util.ArrayList;\n" +
+                "import java.util.Hashtable;\n" +
+                "import java.util.List;\n" +
+                "\n";
+                codigo += "/**\n" +
+                        " *\n" +
+                        " * @author Geovane\n" +
+                        " * Gerado automaticaente por AdonaiSoft - Utilitário\n" +
+                        " */\n";
+            }
+                
+            if (requerToken)
+            {
+                
+                codigo += "public class " + className + "Controller {\n" +
                 "\n" +
                 "    " + classNameConnection + " connection = new " + classNameConnection + "();\n" +
                 util +
@@ -626,19 +777,7 @@ namespace AdonaiSoft_Utilitario.Utilitario
             }
             else
             {
-                codigo = "import com.pain_crud.Alias;\n" +
-                "import com.pain_crud.PainCrud;\n" +
-                "import org.springframework.web.bind.annotation.RestController;\n" +
-                "import java.sql.Connection;\n" +
-                "import java.sql.PreparedStatement;\n" +
-                "import java.sql.ResultSet;\n" +
-                "import java.sql.SQLException;\n" +
-                "import java.util.ArrayList;\n" +
-                "import java.util.Hashtable;\n" +
-                "import java.util.List;\n" +
-                "\n" +
-                "@RestController\n" +
-                "public class " + className + "Controller {\n" +
+                codigo +=  "public class " + className + "Controller {\n" +
                 "\n" +
                 "    " + classNameConnection + " connection = new " + classNameConnection + "();\n" +
                 util +
@@ -655,7 +794,7 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 "        PreparedStatement stmt = null;\n" +
                 "        int scalar = 0;\n" +
                 "\n" +
-                "        con = connection.getNewConnections("+Form1.dbName+");\n" +
+                "        con = connection.getNewConnections(\""+Form1.dbName+"\");\n" +
                 "\n" +
                 "        con.setAutoCommit(false);\n" +
                 "\n" +
@@ -677,7 +816,7 @@ namespace AdonaiSoft_Utilitario.Utilitario
                 "\n" +
                 "        Object object = new Object();\n" +
                 "        Connection con = null;\n" +
-                "        con = connection.getNewConnections(" + Form1.dbName + ");\n" +
+                "        con = connection.getNewConnections(\"" + Form1.dbName + "\");\n" +
                 "\n" +
                 "        String sql = \"select * from \"+" + className + ".class.getAnnotation(Alias.class).value()+\" where id = \" + id;\n" +
                 "\n" +
