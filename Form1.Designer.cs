@@ -38,6 +38,8 @@
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.baseOriginal = new MetroFramework.Controls.MetroTextBox();
             this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
+            this.metroLabel18 = new MetroFramework.Controls.MetroLabel();
+            this.lang = new MetroFramework.Controls.MetroComboBox();
             this.cheRest = new MetroFramework.Controls.MetroCheckBox();
             this.cheUtil = new MetroFramework.Controls.MetroCheckBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
@@ -89,8 +91,6 @@
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.txtUser = new MetroFramework.Controls.MetroTextBox();
             this.txtLocalBanco = new MetroFramework.Controls.MetroTextBox();
-            this.metroLabel18 = new MetroFramework.Controls.MetroLabel();
-            this.lang = new MetroFramework.Controls.MetroComboBox();
             this.Uteis.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
             this.metroTabPage2.SuspendLayout();
@@ -250,6 +250,31 @@
             this.metroTabPage2.VerticalScrollbarBarColor = true;
             this.metroTabPage2.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage2.VerticalScrollbarSize = 10;
+            // 
+            // metroLabel18
+            // 
+            this.metroLabel18.AutoSize = true;
+            this.metroLabel18.Location = new System.Drawing.Point(9, 17);
+            this.metroLabel18.Name = "metroLabel18";
+            this.metroLabel18.Size = new System.Drawing.Size(74, 19);
+            this.metroLabel18.TabIndex = 40;
+            this.metroLabel18.Text = "Linguagem";
+            // 
+            // lang
+            // 
+            this.lang.FormattingEnabled = true;
+            this.lang.ItemHeight = 23;
+            this.lang.Items.AddRange(new object[] {
+            "Java",
+            "C#",
+            "Python",
+            "Dart",
+            "JavaScript"});
+            this.lang.Location = new System.Drawing.Point(9, 39);
+            this.lang.Name = "lang";
+            this.lang.Size = new System.Drawing.Size(198, 29);
+            this.lang.TabIndex = 39;
+            this.lang.UseSelectable = true;
             // 
             // cheRest
             // 
@@ -761,7 +786,7 @@
             // 
             this.txtDataVersao.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.txtDataVersao.Location = new System.Drawing.Point(11, 40);
-            this.txtDataVersao.MinimumSize = new System.Drawing.Size(0, 29);
+            this.txtDataVersao.MinimumSize = new System.Drawing.Size(4, 29);
             this.txtDataVersao.Name = "txtDataVersao";
             this.txtDataVersao.Size = new System.Drawing.Size(212, 29);
             this.txtDataVersao.TabIndex = 2;
@@ -1038,30 +1063,6 @@
             this.txtLocalBanco.UseSelectable = true;
             this.txtLocalBanco.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.txtLocalBanco.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // metroLabel18
-            // 
-            this.metroLabel18.AutoSize = true;
-            this.metroLabel18.Location = new System.Drawing.Point(9, 17);
-            this.metroLabel18.Name = "metroLabel18";
-            this.metroLabel18.Size = new System.Drawing.Size(74, 19);
-            this.metroLabel18.TabIndex = 40;
-            this.metroLabel18.Text = "Linguagem";
-            // 
-            // lang
-            // 
-            this.lang.FormattingEnabled = true;
-            this.lang.ItemHeight = 23;
-            this.lang.Items.AddRange(new object[] {
-            "Java",
-            "C#",
-            "Python",
-            "Dart"});
-            this.lang.Location = new System.Drawing.Point(9, 39);
-            this.lang.Name = "lang";
-            this.lang.Size = new System.Drawing.Size(198, 29);
-            this.lang.TabIndex = 39;
-            this.lang.UseSelectable = true;
             // 
             // Form1
             // 

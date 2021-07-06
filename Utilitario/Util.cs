@@ -244,6 +244,22 @@ namespace AdonaiSoft_Utilitario.Utilitario
             return codigo;
         }
 
+        public static String ModelJs(String[] coluna)
+        {
+
+            String codigo = "form: {\n" +
+                            "        add: true,\n" +
+                            "        edit: false,\n" +
+                            "        dele: false,\n";
+                            
+            foreach (string col in coluna)
+            {
+                codigo += "        "+col+": '',\n";
+            }
+            codigo += "      }";
+            return codigo;
+        }
+
         public static String Resource(String[] coluna, String[] tipo, String package, String classe,String endPoint, Boolean requerToken, String classNameConnection)
         {
             

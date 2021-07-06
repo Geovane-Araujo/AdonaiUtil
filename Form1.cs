@@ -755,7 +755,12 @@ namespace AdonaiSoft_Utilitario
                     {
                         if (checlassico.Checked)
                         {
-                            model = Util.Model(coluna, tipo, txtPakage.Text, txtClasse.Text, txtConexao.Text);
+                            if (lang.Text.Equals("Java"))
+                                model = Util.Model(coluna, tipo, txtPakage.Text, txtClasse.Text, txtConexao.Text);
+                            else if (lang.Text.Equals("C#"))
+                                model = Util.ModelCsharp(coluna, tipo, txtPakage.Text, txtClasse.Text, txtConexao.Text);
+                            else if (lang.Text.Equals("JavaScript"))
+                                model = Util.ModelJs(coluna);
                         }
                         else if (chepain.Checked)
                         {
@@ -930,6 +935,8 @@ namespace AdonaiSoft_Utilitario
                                 model = Util.Model(coluna, tipo, txtPakage.Text, txtClasse.Text, txtConexao.Text);
                             else if(lang.Text.Equals("C#"))
                                 model = Util.ModelCsharp(coluna, tipo, txtPakage.Text, txtClasse.Text, txtConexao.Text);
+                            else if (lang.Text.Equals("JavaScript"))
+                                model = Util.ModelJs(coluna);
                         }
                         else if (chepain.Checked)//apenas java
                         {
